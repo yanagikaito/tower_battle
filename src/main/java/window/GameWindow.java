@@ -1,20 +1,14 @@
 package window;
 
-import factory.ConcreteGameElementFactory;
 import factory.GameElementFactory;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GameWindow implements Window {
-    private GameElementFactory factory = new ConcreteGameElementFactory();
-    private JFrame window;
-    private Container con;
+public record GameWindow(GameElementFactory factory, JFrame window, Container con) implements Window {
 
     @Override
     public void frame() {
-        // ウィンドウ作成
-        window = factory.createFrame();
-        con = window.getContentPane();
+
     }
 }
