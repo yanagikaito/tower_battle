@@ -37,6 +37,13 @@ public class ConcreteGameElementFactory extends GameElementFactory {
     }
 
     @Override
+    public JPanel createStartButtonPanel() {
+        JPanel startButtonPanel = new JPanel();
+        startButtonPanel.setBackground(Color.BLUE);
+        return startButtonPanel;
+    }
+
+    @Override
     public int createSize() {
         int originalTileSize = 16;
         int scale = 3;
@@ -45,7 +52,12 @@ public class ConcreteGameElementFactory extends GameElementFactory {
 
     @Override
     public Font createFont() {
-        return new Font("アリアル", Font.PLAIN, 35);
+        return new Font("アリアル", Font.PLAIN, 65);
+    }
+
+    @Override
+    public Font createNormalFont() {
+        return new Font("アリアル", Font.PLAIN, 25);
     }
 
     @Override
@@ -57,7 +69,7 @@ public class ConcreteGameElementFactory extends GameElementFactory {
 
     @Override
     public JButton createButton(String text) {
-        JButton button = new JButton();
+        JButton button = new JButton("スタート");
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
