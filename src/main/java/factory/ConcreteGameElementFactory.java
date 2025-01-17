@@ -4,11 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ConcreteGameElementFactory extends GameElementFactory {
+
     @Override
     public JFrame createFrame() {
+
+        // 横
+        int maxScreenRow = 16;
+        // 縦
+        int maxScreenCol = 12;
+        int tileSize = createSize();
+        int screenWidth = tileSize * maxScreenRow;
+        int screenHeight = tileSize * maxScreenCol;
+
         // ウィンドウ作成
         JFrame frame = new JFrame();
-        frame.setSize(800, 600);
+        frame.setSize(screenWidth, screenHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.BLACK);
 
@@ -27,8 +37,20 @@ public class ConcreteGameElementFactory extends GameElementFactory {
     }
 
     @Override
+    public int createSize() {
+        int originalTileSize = 16;
+        int scale = 3;
+        return originalTileSize * scale;
+    }
+
+    @Override
+    public Font createFont() {
+        return new Font("アリアル", Font.PLAIN, 35);
+    }
+
+    @Override
     public JLabel createLabel(String text) {
-        JLabel label = new JLabel();
+        JLabel label = new JLabel("TOWER BATTLE");
         label.setForeground(Color.WHITE);
         return label;
     }

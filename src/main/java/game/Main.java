@@ -16,7 +16,9 @@ public class Main {
         JFrame window = factory.createFrame();
         Container con = window.getContentPane();
         JPanel titleNamePanel = factory.createPanel();
-        GameWindow gameWindow = new GameWindow(factory, window, con, titleNamePanel);
+        JLabel titleNameLabel = factory.createLabel("TOWER BATTLE");
+        Font titleFont = factory.createFont();
+        GameWindow gameWindow = new GameWindow(factory, window, con, titleNamePanel,titleNameLabel,titleFont);
 
         gameWindow.frame();
     }
