@@ -1,25 +1,34 @@
 package window;
 
+import factory.ConcreteGameElementFactory;
 import factory.GameElementFactory;
+import handler.TitleScreenHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public record GameWindow(GameElementFactory factory,
-                         Container con,
-                         JPanel titleNamePanel,
-                         JPanel startButtonPanel,
-                         JPanel mainTextPanel,
-                         JLabel titleNameLabel,
-                         JButton startButton,
-                         JTextArea mainTextArea,
-                         Font titleFont,
-                         Font normalFont) implements Window, ActionListener {
+public class GameWindow implements Window {
+
+    GameElementFactory factory = new ConcreteGameElementFactory();
+
+    // ウィンドウ作成
+    JFrame window;
+    Container con;
+    JPanel titleNamePanel = factory.createPanel();
+    JPanel startButtonPanel = factory.createStartButtonPanel();
+    JPanel mainTextPanel = factory.createMainTextPanel();
+    JLabel titleNameLabel = factory.createLabel("TOWER BATTLE");
+    JButton startButton = factory.createButton("スタート");
+    JTextArea mainTextArea = factory.createTextArea("これはメインのテキストエリア");
+    Font titleFont = factory.createFont();
+    Font normalFont = factory.createNormalFont();
+    TitleScreenHandler tsHandler = new TitleScreenHandler(this);
 
     @Override
     public void frame() {
+
+        window = factory.createFrame();
+        con = window.getContentPane();
 
         // タイトルパネル作成
         titleNamePanel.setBounds(factory.createSize() + 52, factory.createSize() + 32,
@@ -35,7 +44,7 @@ public record GameWindow(GameElementFactory factory,
 
         // スタートボタン作成
         startButton.setFont(normalFont);
-        startButton.addActionListener(this);
+        startButton.addActionListener(tsHandler);
 
         // ウィンドウに貼り付け
         titleNamePanel.add(titleNameLabel);
@@ -60,10 +69,5 @@ public record GameWindow(GameElementFactory factory,
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        createGameScreen();
     }
 }
