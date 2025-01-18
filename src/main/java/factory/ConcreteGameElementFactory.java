@@ -39,8 +39,15 @@ public class ConcreteGameElementFactory extends GameElementFactory {
     @Override
     public JPanel createStartButtonPanel() {
         JPanel startButtonPanel = new JPanel();
-        startButtonPanel.setBackground(Color.BLUE);
+        startButtonPanel.setBackground(Color.BLACK);
         return startButtonPanel;
+    }
+
+    @Override
+    public JPanel createMainTextPanel() {
+        JPanel mainTextPanel = new JPanel();
+        mainTextPanel.setBackground(Color.BLUE);
+        return mainTextPanel;
     }
 
     @Override
@@ -78,7 +85,7 @@ public class ConcreteGameElementFactory extends GameElementFactory {
 
     @Override
     public JTextArea createTextArea(String text) {
-        JTextArea textArea = new JTextArea();
+        JTextArea textArea = new JTextArea("これはメインのテキストエリア");
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.WHITE);
         textArea.setLineWrap(true);
