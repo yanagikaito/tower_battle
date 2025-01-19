@@ -17,8 +17,13 @@ public class GameWindow implements Window {
     JPanel titleNamePanel = factory.createPanel();
     JPanel startButtonPanel = factory.createStartButtonPanel();
     JPanel mainTextPanel = factory.createMainTextPanel();
+    JPanel choiceButtonPanel = factory.createChoiceButtonPanel();
     JLabel titleNameLabel = factory.createLabel("TOWER BATTLE");
     JButton startButton = factory.createButton("スタート");
+    JButton weaponShopButton = factory.createWeaponShopButton("武器屋");
+    JButton armorShopButton = factory.createArmorShopButton("防具屋");
+    JButton statusButton = factory.createStatusButton("ステータス");
+    JButton devilsTowerButton = factory.createDevilsTowerButton("魔の塔");
     JTextArea mainTextArea = factory.createTextArea("これはメインのテキストエリア");
     Font titleFont = factory.createFont();
     Font normalFont = factory.createNormalFont();
@@ -61,13 +66,33 @@ public class GameWindow implements Window {
         startButtonPanel.setVisible(false);
 
         // ゲームメインのパネル作成
-        mainTextPanel.setBounds(100, 100, 600, 250);
+        mainTextPanel.setBounds(factory.createSize() + 32, factory.createSize() + 32,
+                (factory.createSize() * 10) + 120, (factory.createSize() * 5) + 10);
         con.add(mainTextPanel);
 
-        mainTextArea.setBounds(100, 100, 600, 250);
+        mainTextArea.setBounds((factory.createSize() * 2) + 4, (factory.createSize() * 2) + 4,
+                (factory.createSize() * 10) + 120, (factory.createSize() * 5) + 10);
         mainTextArea.setForeground(Color.WHITE);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
+
+        // 選択ボタン作成
+        choiceButtonPanel.setBounds((factory.createSize() * 5) - 10,
+                (factory.createSize() * 5) + 110,
+                (factory.createSize() * 5) + 60, (factory.createSize() * 3) + 6);
+        con.add(choiceButtonPanel);
+
+        weaponShopButton.setFont(normalFont);
+        choiceButtonPanel.add(weaponShopButton);
+
+        armorShopButton.setFont(normalFont);
+        choiceButtonPanel.add(armorShopButton);
+
+        statusButton.setFont(normalFont);
+        choiceButtonPanel.add(statusButton);
+
+        devilsTowerButton.setFont(normalFont);
+        choiceButtonPanel.add(devilsTowerButton);
     }
 }
