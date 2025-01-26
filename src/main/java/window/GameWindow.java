@@ -105,10 +105,9 @@ public class GameWindow implements Window {
 
     public void playerStatus() {
 
-        // ここで新たにウィンドウ作成
-        window = factory.createFrame();
-        // フレームから ContentPane のオブジェクトを取得
-        con = window.getContentPane();
+        // 2つのパネルを無効にする。
+        mainTextPanel.setVisible(false);
+        choiceButtonPanel.setVisible(false);
 
         // プレイヤーのステータスパネル作成
         playerStatusPanel.setBounds(100, 15, 600, 50);
