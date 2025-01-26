@@ -46,15 +46,22 @@ public class ConcreteGameElementFactory extends GameElementFactory {
     @Override
     public JPanel createMainTextPanel() {
         JPanel mainTextPanel = new JPanel();
-        mainTextPanel.setBackground(Color.BLUE);
+        mainTextPanel.setBackground(Color.BLACK);
         return mainTextPanel;
     }
 
     @Override
     public JPanel createChoiceButtonPanel() {
         JPanel choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBackground(Color.RED);
+        choiceButtonPanel.setBackground(Color.BLACK);
         return choiceButtonPanel;
+    }
+
+    @Override
+    public JPanel createPlayerStatusPanel() {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.BLACK);
+        return panel;
     }
 
     @Override
@@ -128,7 +135,7 @@ public class ConcreteGameElementFactory extends GameElementFactory {
 
     @Override
     public JTextArea createTextArea(String text) {
-        JTextArea textArea = new JTextArea("これはメインのテキストエリア");
+        JTextArea textArea = new JTextArea("町の施設");
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.WHITE);
         textArea.setLineWrap(true);

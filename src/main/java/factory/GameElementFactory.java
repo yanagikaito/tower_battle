@@ -15,6 +15,8 @@ public abstract class GameElementFactory {
 
     public abstract JPanel createChoiceButtonPanel();
 
+    public abstract JPanel createPlayerStatusPanel();
+
     public abstract int createSize();
 
     public abstract Font createFont();
