@@ -17,7 +17,7 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
         switch (gameWindow.getPosition()) {
             case "ステータス" -> {
                 switch (yourChoice) {
-                    case "c3" -> gameWindow.playerStatus();
+                    case "c3" -> gameWindow.statusScreen();
                 }
             }
         }
