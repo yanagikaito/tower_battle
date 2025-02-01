@@ -59,9 +59,9 @@ public class ConcreteGameElementFactory extends GameElementFactory {
 
     @Override
     public JPanel createPlayerStatusPanel() {
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.BLACK);
-        return panel;
+        JPanel playerStatusPanel = new JPanel();
+        playerStatusPanel.setBackground(Color.BLACK);
+        return playerStatusPanel;
     }
 
     @Override
@@ -86,6 +86,62 @@ public class ConcreteGameElementFactory extends GameElementFactory {
         JLabel label = new JLabel("TOWER BATTLE");
         label.setForeground(Color.WHITE);
         return label;
+    }
+
+    @Override
+    public JLabel createLvLabelText(String text) {
+        JLabel lvLabel = new JLabel("LV");
+        lvLabel.setForeground(Color.WHITE);
+        return lvLabel;
+    }
+
+    @Override
+    public JLabel createLvLabelNumber() {
+        JLabel lvLabelNumber = new JLabel();
+        lvLabelNumber.setForeground(Color.WHITE);
+        return lvLabelNumber;
+    }
+
+    @Override
+    public JLabel createHPLabelText(String text) {
+        JLabel hpLabelText = new JLabel("HP");
+        hpLabelText.setForeground(Color.WHITE);
+        return hpLabelText;
+    }
+
+    @Override
+    public JLabel createHPLabelNumber() {
+        JLabel hpLabelNumber = new JLabel();
+        hpLabelNumber.setForeground(Color.WHITE);
+        return hpLabelNumber;
+    }
+
+    @Override
+    public JLabel createATKLabelText(String text) {
+        JLabel atkLabelText = new JLabel("攻撃力");
+        atkLabelText.setForeground(Color.WHITE);
+        return atkLabelText;
+    }
+
+    @Override
+    public JLabel createATKLabelNumber() {
+        JLabel atkLabelNumber = new JLabel();
+        atkLabelNumber.setForeground(Color.WHITE);
+        return atkLabelNumber;
+    }
+
+    @Override
+    public JLabel createDEFLabelText(String text) {
+        JLabel defLabelText = new JLabel("防御力");
+        defLabelText.setForeground(Color.WHITE);
+        return defLabelText;
+    }
+
+    @Override
+    public JLabel createDEFLabelNumber() {
+        JLabel defLabelNumber = new JLabel();
+        defLabelNumber.setForeground(Color.WHITE);
+        return defLabelNumber;
     }
 
     @Override

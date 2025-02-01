@@ -4,6 +4,8 @@ import factory.ConcreteGameElementFactory;
 import factory.GameElementFactory;
 import handler.ChoiceHandler;
 import handler.TitleScreenHandler;
+import status.PlayerStatus;
+import status.Status;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,7 @@ import java.awt.*;
 public class GameWindow implements Window {
 
     private GameElementFactory factory = new ConcreteGameElementFactory();
+    private Status status = new PlayerStatus(1, 10, 5, 3);
 
     // ウィンドウ作成
     private JFrame window;
@@ -22,6 +25,14 @@ public class GameWindow implements Window {
     private JPanel choiceButtonPanel = factory.createChoiceButtonPanel();
     private JPanel playerStatusPanel = factory.createPlayerStatusPanel();
     private JLabel titleNameLabel = factory.createLabel("TOWER BATTLE");
+    private JLabel lvLabel = factory.createLvLabelText("LV");
+    private JLabel lvLabelNumber = factory.createLvLabelNumber();
+    private JLabel hpLabel = factory.createHPLabelText("HP");
+    private JLabel hpLabelNumber = factory.createHPLabelNumber();
+    private JLabel atkLabel = factory.createATKLabelText("攻撃力");
+    private JLabel atkLabelNumber = factory.createATKLabelNumber();
+    private JLabel defLabel = factory.createDEFLabelText("防御力");
+    private JLabel defLabelNumber = factory.createDEFLabelNumber();
     private JButton startButton = factory.createButton("スタート");
     private JButton weaponShopButton = factory.createWeaponShopButton("武器屋");
     private JButton armorShopButton = factory.createArmorShopButton("防具屋");
@@ -103,17 +114,45 @@ public class GameWindow implements Window {
         choiceButtonPanel.add(devilsTowerButton);
     }
 
-    public void playerStatus() {
+    @Override
+    public void statusScreen() {
 
         // 2つのパネルを無効にする。
         mainTextPanel.setVisible(false);
         choiceButtonPanel.setVisible(false);
 
-        // プレイヤーのステータスパネル作成
-        playerStatusPanel.setBounds(100, 15, 600, 50);
         con.add(playerStatusPanel);
-        playerStatusPanel.setBackground(Color.BLUE);
-        playerStatusPanel.setLayout(new GridLayout(1, 4));
+        playerStatusPanel.setBounds(80, 20, 600, 200);
+        playerStatusPanel.setLayout(new GridLayout(5, 4));
+
+        lvLabel.setFont(normalFont);
+        playerStatusPanel.add(lvLabel);
+
+        lvLabelNumber.setFont(normalFont);
+        playerStatusPanel.add(lvLabelNumber);
+
+        hpLabel.setFont(normalFont);
+        playerStatusPanel.add(hpLabel);
+
+        hpLabelNumber.setFont(normalFont);
+        playerStatusPanel.add(hpLabelNumber);
+
+        atkLabel.setFont(normalFont);
+        playerStatusPanel.add(atkLabel);
+
+        atkLabelNumber.setFont(normalFont);
+        playerStatusPanel.add(atkLabelNumber);
+
+        defLabel.setFont(normalFont);
+        playerStatusPanel.add(defLabel);
+
+        defLabelNumber.setFont(normalFont);
+        playerStatusPanel.add(defLabelNumber);
+
+        hpLabelNumber.setText("" + status.hp());
+        lvLabelNumber.setText("" + status.lv());
+        atkLabelNumber.setText("" + status.atk());
+        defLabelNumber.setText("" + status.def());
     }
 
     public String getPosition() {

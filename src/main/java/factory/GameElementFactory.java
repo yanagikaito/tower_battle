@@ -25,6 +25,22 @@ public abstract class GameElementFactory {
 
     public abstract JLabel createLabel(String text);
 
+    public abstract JLabel createLvLabelText(String text);
+
+    public abstract JLabel createLvLabelNumber();
+
+    public abstract JLabel createHPLabelText(String text);
+
+    public abstract JLabel createHPLabelNumber();
+
+    public abstract JLabel createATKLabelText(String text);
+
+    public abstract JLabel createATKLabelNumber();
+
+    public abstract JLabel createDEFLabelText(String text);
+
+    public abstract JLabel createDEFLabelNumber();
+
     public abstract JButton createButton(String text);
 
     public abstract JButton createWeaponShopButton(String text);
