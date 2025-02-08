@@ -78,8 +78,8 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createWeaponLabelTextName(String text) {
-        JLabel weaponLabelTextName = new JLabel("武器");
+    public JLabel createWeaponLabelTextName() {
+        JLabel weaponLabelTextName = new JLabel();
         weaponLabelTextName.setForeground(Color.WHITE);
         return weaponLabelTextName;
     }
@@ -92,8 +92,8 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createDEFLabelTextName(String text) {
-        JLabel defLabelTextName = new JLabel("防具");
+    public JLabel createDEFLabelTextName() {
+        JLabel defLabelTextName = new JLabel();
         defLabelTextName.setForeground(Color.WHITE);
         return defLabelTextName;
     }
