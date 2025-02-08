@@ -1,11 +1,11 @@
 package window;
 
-import factory.ConcreteGameElementFactory;
-import factory.FrameFactoryImpl;
-import factory.GameElementFactory;
+import factory.*;
 import frame.GameFrame;
 import handler.ChoiceHandler;
 import handler.TitleScreenHandler;
+import label.GameLabel;
+import panel.GamePanel;
 import status.PlayerStatus;
 
 import javax.swing.*;
@@ -17,25 +17,31 @@ public class GameWindow implements Window {
 
     private GameFrame gameFrame = FrameFactoryImpl.createFrame(baseDisplay());
     private GameElementFactory factory = new ConcreteGameElementFactory();
+    private GamePanel gamePanel = new PanelFactory();
+    private GameLabel gameLabel = new LabelFactory();
 
     // ウィンドウ作成
     private JFrame window;
     private Container con;
     private String position = "ステータス";
-    private JPanel titleNamePanel = factory.createPanel();
-    private JPanel startButtonPanel = factory.createStartButtonPanel();
-    private JPanel mainTextPanel = factory.createMainTextPanel();
-    private JPanel choiceButtonPanel = factory.createChoiceButtonPanel();
-    private JPanel playerStatusPanel = factory.createPlayerStatusPanel();
-    private JLabel titleNameLabel = factory.createLabel("");
-    private JLabel lvLabel = factory.createLvLabelText("");
-    private JLabel lvLabelNumber = factory.createLvLabelNumber();
-    private JLabel hpLabel = factory.createHPLabelText("");
-    private JLabel hpLabelNumber = factory.createHPLabelNumber();
-    private JLabel atkLabel = factory.createATKLabelText("");
-    private JLabel atkLabelNumber = factory.createATKLabelNumber();
-    private JLabel defLabel = factory.createDEFLabelText("");
-    private JLabel defLabelNumber = factory.createDEFLabelNumber();
+    private JPanel titleNamePanel = gamePanel.createPanel();
+    private JPanel startButtonPanel = gamePanel.createStartButtonPanel();
+    private JPanel mainTextPanel = gamePanel.createMainTextPanel();
+    private JPanel choiceButtonPanel = gamePanel.createChoiceButtonPanel();
+    private JPanel playerStatusPanel = gamePanel.createPlayerStatusPanel();
+    private JLabel titleNameLabel = gameLabel.createLabel("");
+    private JLabel lvLabel = gameLabel.createLvLabelText("");
+    private JLabel lvLabelNumber = gameLabel.createLvLabelNumber();
+    private JLabel hpLabel = gameLabel.createHPLabelText("");
+    private JLabel hpLabelNumber = gameLabel.createHPLabelNumber();
+    private JLabel atkLabel = gameLabel.createATKLabelText("");
+    private JLabel atkLabelNumber = gameLabel.createATKLabelNumber();
+    private JLabel defLabelText = gameLabel.createDEFLabelText("");
+    private JLabel defLabelNumber = gameLabel.createDEFLabelNumber();
+    private JLabel weaponLabel = gameLabel.createWeaponLabel("");
+    private JLabel weaponLabelName = gameLabel.createWeaponLabelTextName("");
+    private JLabel defLabel = gameLabel.createDEFLabel("");
+    private JLabel defLabelName = gameLabel.createDEFLabelTextName("");
     private JButton startButton = factory.createButton("");
     private JButton weaponShopButton = factory.createWeaponShopButton("");
     private JButton armorShopButton = factory.createArmorShopButton("");
@@ -126,7 +132,19 @@ public class GameWindow implements Window {
 
         con.add(playerStatusPanel);
         playerStatusPanel.setBounds(80, 20, 600, 200);
-        playerStatusPanel.setLayout(new GridLayout(5, 4));
+        playerStatusPanel.setLayout(new GridLayout(6, 6));
+
+        weaponLabel.setFont(normalFont);
+        playerStatusPanel.add(weaponLabel);
+
+        weaponLabelName.setFont(normalFont);
+        playerStatusPanel.add(weaponLabelName);
+
+        defLabel.setFont(normalFont);
+        playerStatusPanel.add(defLabel);
+
+        defLabelName.setFont(normalFont);
+        playerStatusPanel.add(defLabelName);
 
         lvLabel.setFont(normalFont);
         playerStatusPanel.add(lvLabel);
@@ -146,13 +164,16 @@ public class GameWindow implements Window {
         atkLabelNumber.setFont(normalFont);
         playerStatusPanel.add(atkLabelNumber);
 
-        defLabel.setFont(normalFont);
-        playerStatusPanel.add(defLabel);
+        defLabelText.setFont(normalFont);
+        playerStatusPanel.add(defLabelText);
 
         defLabelNumber.setFont(normalFont);
         playerStatusPanel.add(defLabelNumber);
 
         PlayerStatus.save(status -> {
+
+            weaponLabelName.setText(status.weaponName());
+            defLabelName.setText(status.armorName());
             hpLabelNumber.setText("" + status.hp());
             lvLabelNumber.setText("" + status.lv());
             atkLabelNumber.setText("" + status.atk());
