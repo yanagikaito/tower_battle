@@ -39,9 +39,9 @@ public class GameWindow implements Window {
     private JLabel defLabelText = gameLabel.createDEFLabelText("");
     private JLabel defLabelNumber = gameLabel.createDEFLabelNumber();
     private JLabel weaponLabel = gameLabel.createWeaponLabel("");
-    private JLabel weaponLabelName = gameLabel.createWeaponLabelTextName("");
+    private JLabel weaponLabelName = gameLabel.createWeaponLabelTextName();
     private JLabel defLabel = gameLabel.createDEFLabel("");
-    private JLabel defLabelName = gameLabel.createDEFLabelTextName("");
+    private JLabel defLabelName = gameLabel.createDEFLabelTextName();
     private JButton startButton = factory.createButton("");
     private JButton weaponShopButton = factory.createWeaponShopButton("");
     private JButton armorShopButton = factory.createArmorShopButton("");

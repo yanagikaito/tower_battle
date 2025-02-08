@@ -24,9 +24,9 @@ public abstract class GameLabel {
 
     public abstract JLabel createWeaponLabel(String text);
 
-    public abstract JLabel createWeaponLabelTextName(String text);
+    public abstract JLabel createWeaponLabelTextName();
 
     public abstract JLabel createDEFLabel(String text);
 
-    public abstract JLabel createDEFLabelTextName(String text);
+    public abstract JLabel createDEFLabelTextName();
 }
