@@ -6,30 +6,6 @@ import java.awt.*;
 public class ConcreteGameElementFactory extends GameElementFactory {
 
     @Override
-    public JFrame createFrame() {
-
-        // 横
-        int maxScreenRow = 16;
-        // 縦
-        int maxScreenCol = 12;
-        int tileSize = createSize();
-        int screenWidth = tileSize * maxScreenRow;
-        int screenHeight = tileSize * maxScreenCol;
-
-        // ウィンドウ作成
-        JFrame frame = new JFrame();
-        frame.setSize(screenWidth, screenHeight);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setBackground(Color.BLACK);
-
-        // JFrameのデフォルトのレイアウトを無効
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        return frame;
-    }
-
-    @Override
     public JPanel createPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
@@ -62,13 +38,6 @@ public class ConcreteGameElementFactory extends GameElementFactory {
         JPanel playerStatusPanel = new JPanel();
         playerStatusPanel.setBackground(Color.BLACK);
         return playerStatusPanel;
-    }
-
-    @Override
-    public int createSize() {
-        int originalTileSize = 16;
-        int scale = 3;
-        return originalTileSize * scale;
     }
 
     @Override

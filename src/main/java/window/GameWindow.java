@@ -1,19 +1,22 @@
 package window;
 
 import factory.ConcreteGameElementFactory;
+import factory.FrameFactoryImpl;
 import factory.GameElementFactory;
+import frame.GameFrame;
 import handler.ChoiceHandler;
 import handler.TitleScreenHandler;
 import status.PlayerStatus;
-import status.Status;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static frame.FrameApp.*;
+
 public class GameWindow implements Window {
 
+    private GameFrame gameFrame = FrameFactoryImpl.createFrame(baseDisplay());
     private GameElementFactory factory = new ConcreteGameElementFactory();
-    private Status status = new PlayerStatus(1, 10, 5, 3);
 
     // ウィンドウ作成
     private JFrame window;
@@ -24,21 +27,21 @@ public class GameWindow implements Window {
     private JPanel mainTextPanel = factory.createMainTextPanel();
     private JPanel choiceButtonPanel = factory.createChoiceButtonPanel();
     private JPanel playerStatusPanel = factory.createPlayerStatusPanel();
-    private JLabel titleNameLabel = factory.createLabel("TOWER BATTLE");
-    private JLabel lvLabel = factory.createLvLabelText("LV");
+    private JLabel titleNameLabel = factory.createLabel("");
+    private JLabel lvLabel = factory.createLvLabelText("");
     private JLabel lvLabelNumber = factory.createLvLabelNumber();
-    private JLabel hpLabel = factory.createHPLabelText("HP");
+    private JLabel hpLabel = factory.createHPLabelText("");
     private JLabel hpLabelNumber = factory.createHPLabelNumber();
-    private JLabel atkLabel = factory.createATKLabelText("攻撃力");
+    private JLabel atkLabel = factory.createATKLabelText("");
     private JLabel atkLabelNumber = factory.createATKLabelNumber();
-    private JLabel defLabel = factory.createDEFLabelText("防御力");
+    private JLabel defLabel = factory.createDEFLabelText("");
     private JLabel defLabelNumber = factory.createDEFLabelNumber();
-    private JButton startButton = factory.createButton("スタート");
-    private JButton weaponShopButton = factory.createWeaponShopButton("武器屋");
-    private JButton armorShopButton = factory.createArmorShopButton("防具屋");
-    private JButton statusButton = factory.createStatusButton("ステータス");
-    private JButton devilsTowerButton = factory.createDevilsTowerButton("魔の塔");
-    private JTextArea mainTextArea = factory.createTextArea("町の施設");
+    private JButton startButton = factory.createButton("");
+    private JButton weaponShopButton = factory.createWeaponShopButton("");
+    private JButton armorShopButton = factory.createArmorShopButton("");
+    private JButton statusButton = factory.createStatusButton("");
+    private JButton devilsTowerButton = factory.createDevilsTowerButton("");
+    private JTextArea mainTextArea = factory.createTextArea("");
     private Font titleFont = factory.createFont();
     private Font normalFont = factory.createNormalFont();
     private ChoiceHandler csHandler = new ChoiceHandler(this);
@@ -47,20 +50,20 @@ public class GameWindow implements Window {
     @Override
     public void frame() {
 
-        window = factory.createFrame();
+        window = gameFrame.createFrame();
         con = window.getContentPane();
 
         // タイトルパネル作成
-        titleNamePanel.setBounds(factory.createSize() + 52, factory.createSize() + 32,
-                factory.createSize() * 11, factory.createSize() * 2);
+        titleNamePanel.setBounds(createSize() + 52, createSize() + 32,
+                createSize() * 11, createSize() * 2);
 
         // タイトルラベル作成
         titleNameLabel.setForeground(Color.WHITE);
         titleNameLabel.setFont(titleFont);
 
         // スタートボタンパネル作成
-        startButtonPanel.setBounds((factory.createSize() * 5) + 40, (factory.createSize() * 7) +
-                (factory.createSize() - 32), (factory.createSize() * 3) + 36, factory.createSize() + 32);
+        startButtonPanel.setBounds((createSize() * 5) + 40, (createSize() * 7) +
+                (createSize() - 32), (createSize() * 3) + 36, createSize() + 32);
 
         // スタートボタン作成
         startButton.setFont(normalFont);
@@ -81,21 +84,21 @@ public class GameWindow implements Window {
         startButtonPanel.setVisible(false);
 
         // ゲームメインのパネル作成
-        mainTextPanel.setBounds(factory.createSize() + 32, factory.createSize() + 32,
-                (factory.createSize() * 10) + 120, (factory.createSize() * 5) + 10);
+        mainTextPanel.setBounds(createSize() + 32, createSize() + 32,
+                (createSize() * 10) + 120, (createSize() * 5) + 10);
         con.add(mainTextPanel);
 
-        mainTextArea.setBounds((factory.createSize() * 2) + 4, (factory.createSize() * 2) + 4,
-                (factory.createSize() * 10) + 120, (factory.createSize() * 5) + 10);
+        mainTextArea.setBounds((createSize() * 2) + 4, (createSize() * 2) + 4,
+                (createSize() * 10) + 120, (createSize() * 5) + 10);
         mainTextArea.setForeground(Color.WHITE);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
 
         // 選択ボタン作成
-        choiceButtonPanel.setBounds((factory.createSize() * 5) - 10,
-                (factory.createSize() * 5) + 110,
-                (factory.createSize() * 5) + 60, (factory.createSize() * 3) + 6);
+        choiceButtonPanel.setBounds((createSize() * 5) - 10,
+                (createSize() * 5) + 110,
+                (createSize() * 5) + 60, (createSize() * 3) + 6);
         choiceButtonPanel.setLayout(new FlowLayout());
         con.add(choiceButtonPanel);
 
@@ -149,10 +152,12 @@ public class GameWindow implements Window {
         defLabelNumber.setFont(normalFont);
         playerStatusPanel.add(defLabelNumber);
 
-        hpLabelNumber.setText("" + status.hp());
-        lvLabelNumber.setText("" + status.lv());
-        atkLabelNumber.setText("" + status.atk());
-        defLabelNumber.setText("" + status.def());
+        PlayerStatus.save(status -> {
+            hpLabelNumber.setText("" + status.hp());
+            lvLabelNumber.setText("" + status.lv());
+            atkLabelNumber.setText("" + status.atk());
+            defLabelNumber.setText("" + status.def());
+        });
     }
 
     public String getPosition() {
