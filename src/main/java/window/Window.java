@@ -7,4 +7,6 @@ public interface Window {
     void createGameScreen();
 
     void statusScreen();
+
+    void devilsTowerScreen();
 }

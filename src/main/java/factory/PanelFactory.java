@@ -41,4 +41,11 @@ public class PanelFactory extends GamePanel {
         playerStatusPanel.setBackground(Color.BLACK);
         return playerStatusPanel;
     }
+
+    @Override
+    public JPanel createDevilsTowerPanel() {
+        JPanel devilsTowerPanel = new JPanel();
+        devilsTowerPanel.setBackground(Color.BLUE);
+        return devilsTowerPanel;
+    }
 }

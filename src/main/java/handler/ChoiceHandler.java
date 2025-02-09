@@ -14,10 +14,17 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
         String yourChoice = e.getActionCommand();
 
         // プレイヤーの現在地
-        switch (gameWindow.getPosition()) {
+        switch (gameWindow.getStatusPosition()) {
             case "ステータス" -> {
                 switch (yourChoice) {
                     case "c3" -> gameWindow.statusScreen();
+                }
+            }
+        }
+        switch (gameWindow.getDevilsPosition()) {
+            case "魔の塔" -> {
+                switch (yourChoice) {
+                    case "c4" -> gameWindow.devilsTowerScreen();
                 }
             }
         }

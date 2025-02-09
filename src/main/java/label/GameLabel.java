@@ -6,9 +6,13 @@ public abstract class GameLabel {
 
     public abstract JLabel createLabel(String text);
 
-    public abstract JLabel createLvLabelText(String text);
+    public abstract JLabel createPlayerLvLabelText(String text);
 
-    public abstract JLabel createLvLabelNumber();
+    public abstract JLabel createPlayerLvLabelNumber();
+
+    public abstract JLabel createPlayerLabel(String text);
+
+    public abstract JLabel createPlayerLabelName();
 
     public abstract JLabel createHPLabelText(String text);
 
@@ -29,4 +33,12 @@ public abstract class GameLabel {
     public abstract JLabel createDEFLabel(String text);
 
     public abstract JLabel createDEFLabelTextName();
+
+    public abstract JLabel createMonsterLabel(String text);
+
+    public abstract JLabel createMonsterLabelName();
+
+    public abstract JLabel createMonsterLvLabel(String text);
+
+    public abstract JLabel createMonsterLvLabelNumber();
 }

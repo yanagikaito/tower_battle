@@ -8,6 +8,8 @@ import handler.ChoiceHandler;
 import handler.TitleScreenHandler;
 import label.GameLabel;
 import panel.GamePanel;
+import scroll.GameScroll;
+import status.MonsterStatus;
 import status.PlayerStatus;
 
 import javax.swing.*;
@@ -22,19 +24,22 @@ public class GameWindow implements Window {
     private GamePanel gamePanel = new PanelFactory();
     private GameLabel gameLabel = new LabelFactory();
     private GameButton gameButton = new ButtonFactory();
+    private GameScroll gameScroll = new BattleScreenFactory();
 
     // ウィンドウ作成
     private JFrame window;
     private Container con;
-    private String position = "ステータス";
+    private String statusPosition = "ステータス";
+    private String devilsPosition = "魔の塔";
     private JPanel titleNamePanel = gamePanel.createPanel();
     private JPanel startButtonPanel = gamePanel.createStartButtonPanel();
     private JPanel mainTextPanel = gamePanel.createMainTextPanel();
     private JPanel choiceButtonPanel = gamePanel.createChoiceButtonPanel();
     private JPanel playerStatusPanel = gamePanel.createPlayerStatusPanel();
+    private JPanel devilsTowerPanel = gamePanel.createDevilsTowerPanel();
     private JLabel titleNameLabel = gameLabel.createLabel("");
-    private JLabel lvLabel = gameLabel.createLvLabelText("");
-    private JLabel lvLabelNumber = gameLabel.createLvLabelNumber();
+    private JLabel playerLvLabel = gameLabel.createPlayerLvLabelText("");
+    private JLabel playerLvLabelNumber = gameLabel.createPlayerLvLabelNumber();
     private JLabel hpLabel = gameLabel.createHPLabelText("");
     private JLabel hpLabelNumber = gameLabel.createHPLabelNumber();
     private JLabel atkLabel = gameLabel.createATKLabelText("");
@@ -44,6 +49,12 @@ public class GameWindow implements Window {
     private JLabel weaponLabel = gameLabel.createWeaponLabel("");
     private JLabel weaponLabelName = gameLabel.createWeaponLabelTextName();
     private JLabel defLabel = gameLabel.createDEFLabel("");
+    private JLabel monsterLabel = gameLabel.createMonsterLabel("");
+    private JLabel monsterLabelName = gameLabel.createMonsterLabelName();
+    private JLabel monsterLvLabel = gameLabel.createMonsterLvLabel("");
+    private JLabel monsterLvLabelNumber = gameLabel.createMonsterLvLabelNumber();
+    private JLabel playerLabel = gameLabel.createPlayerLabel("");
+    private JLabel playerLabelName = gameLabel.createPlayerLabelName();
     private JLabel defLabelName = gameLabel.createDEFLabelTextName();
     private JButton startButton = gameButton.createButton("");
     private JButton weaponShopButton = gameButton.createWeaponShopButton("");
@@ -51,6 +62,7 @@ public class GameWindow implements Window {
     private JButton statusButton = gameButton.createStatusButton("");
     private JButton devilsTowerButton = gameButton.createDevilsTowerButton("");
     private JTextArea mainTextArea = gameFont.createTextArea("");
+    private JScrollPane battleScreenScroll = gameScroll.createBattleScreenScroll();
     private Font titleFont = gameFont.createFont();
     private Font normalFont = gameFont.createNormalFont();
     private ChoiceHandler csHandler = new ChoiceHandler(this);
@@ -112,9 +124,13 @@ public class GameWindow implements Window {
         con.add(choiceButtonPanel);
 
         weaponShopButton.setFont(normalFont);
+        weaponShopButton.addActionListener(csHandler);
+        weaponShopButton.setActionCommand("c1");
         choiceButtonPanel.add(weaponShopButton);
 
         armorShopButton.setFont(normalFont);
+        armorShopButton.addActionListener(csHandler);
+        armorShopButton.setActionCommand("c2");
         choiceButtonPanel.add(armorShopButton);
 
         statusButton.setFont(normalFont);
@@ -123,6 +139,8 @@ public class GameWindow implements Window {
         choiceButtonPanel.add(statusButton);
 
         devilsTowerButton.setFont(normalFont);
+        devilsTowerButton.addActionListener(csHandler);
+        devilsTowerButton.setActionCommand("c4");
         choiceButtonPanel.add(devilsTowerButton);
     }
 
@@ -135,7 +153,7 @@ public class GameWindow implements Window {
 
         con.add(playerStatusPanel);
         playerStatusPanel.setBounds(80, 20, 600, 200);
-        playerStatusPanel.setLayout(new GridLayout(6, 6));
+        playerStatusPanel.setLayout(new GridLayout(6, 1));
 
         weaponLabel.setFont(normalFont);
         playerStatusPanel.add(weaponLabel);
@@ -149,11 +167,11 @@ public class GameWindow implements Window {
         defLabelName.setFont(normalFont);
         playerStatusPanel.add(defLabelName);
 
-        lvLabel.setFont(normalFont);
-        playerStatusPanel.add(lvLabel);
+        playerLvLabel.setFont(normalFont);
+        playerStatusPanel.add(playerLvLabel);
 
-        lvLabelNumber.setFont(normalFont);
-        playerStatusPanel.add(lvLabelNumber);
+        playerLvLabelNumber.setFont(normalFont);
+        playerStatusPanel.add(playerLvLabelNumber);
 
         hpLabel.setFont(normalFont);
         playerStatusPanel.add(hpLabel);
@@ -178,13 +196,78 @@ public class GameWindow implements Window {
             weaponLabelName.setText(status.weaponName());
             defLabelName.setText(status.armorName());
             hpLabelNumber.setText("" + status.hp());
-            lvLabelNumber.setText("" + status.lv());
+            playerLvLabelNumber.setText("" + status.lv());
             atkLabelNumber.setText("" + status.atk());
             defLabelNumber.setText("" + status.def());
         });
     }
 
-    public String getPosition() {
-        return position;
+    @Override
+    public void devilsTowerScreen() {
+
+        // 2つのパネルを無効にする。
+        mainTextPanel.setVisible(false);
+        choiceButtonPanel.setVisible(false);
+
+        con.add(devilsTowerPanel);
+        devilsTowerPanel.setBounds(0, 0, 768, 576);
+        devilsTowerPanel.setLayout(new FlowLayout());
+        devilsTowerPanel.add(battleScreenScroll);
+
+        monsterLabel.setFont(normalFont);
+        devilsTowerPanel.add(monsterLabel);
+
+        monsterLabelName.setFont(normalFont);
+        devilsTowerPanel.add(monsterLabelName);
+
+        monsterLvLabel.setFont(normalFont);
+        devilsTowerPanel.add(monsterLvLabel);
+
+        monsterLvLabelNumber.setFont(normalFont);
+        devilsTowerPanel.add(monsterLvLabelNumber);
+
+        hpLabel.setFont(normalFont);
+        devilsTowerPanel.add(hpLabel);
+
+        hpLabelNumber.setFont(normalFont);
+        devilsTowerPanel.add(hpLabelNumber);
+
+        MonsterStatus.save(status -> {
+            monsterLabelName.setText(status.monsterName());
+            hpLabelNumber.setText(" " + status.hp());
+            monsterLvLabelNumber.setText(" " + status.lv());
+        });
+
+        playerLabel.setFont(normalFont);
+        devilsTowerPanel.add(playerLabel);
+
+        playerLabelName.setFont(normalFont);
+        devilsTowerPanel.add(playerLabelName);
+
+        playerLvLabel.setFont(normalFont);
+        devilsTowerPanel.add(playerLvLabel);
+
+        playerLvLabelNumber.setFont(normalFont);
+        devilsTowerPanel.add(playerLvLabelNumber);
+
+        hpLabel.setFont(normalFont);
+        devilsTowerPanel.add(hpLabel);
+
+        hpLabelNumber.setFont(normalFont);
+        devilsTowerPanel.add(hpLabelNumber);
+
+        PlayerStatus.save(status -> {
+            playerLabelName.setText(status.playerName());
+            hpLabelNumber.setText("" + status.hp());
+            playerLvLabelNumber.setText("" + status.lv());
+        });
+    }
+
+    public String getStatusPosition() {
+        return statusPosition;
+    }
+
+    public String getDevilsPosition() {
+        return devilsPosition;
     }
 }
