@@ -15,22 +15,22 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createLvLabelText(String text) {
-        JLabel lvLabel = new JLabel("LV");
-        lvLabel.setForeground(Color.WHITE);
-        return lvLabel;
+    public JLabel createPlayerLvLabelText(String text) {
+        JLabel playerLvLabelText = new JLabel("LV");
+        playerLvLabelText.setForeground(Color.WHITE);
+        return playerLvLabelText;
     }
 
     @Override
-    public JLabel createLvLabelNumber() {
-        JLabel lvLabelNumber = new JLabel();
-        lvLabelNumber.setForeground(Color.WHITE);
-        return lvLabelNumber;
+    public JLabel createPlayerLvLabelNumber() {
+        JLabel playerLvLabelNumber = new JLabel();
+        playerLvLabelNumber.setForeground(Color.WHITE);
+        return playerLvLabelNumber;
     }
 
     @Override
     public JLabel createHPLabelText(String text) {
-        JLabel hpLabelText = new JLabel("HP");
+        JLabel hpLabelText = new JLabel(" HP");
         hpLabelText.setForeground(Color.WHITE);
         return hpLabelText;
     }
@@ -96,5 +96,47 @@ public class LabelFactory extends GameLabel {
         JLabel defLabelTextName = new JLabel();
         defLabelTextName.setForeground(Color.WHITE);
         return defLabelTextName;
+    }
+
+    @Override
+    public JLabel createMonsterLabel(String text) {
+        JLabel monsterLabel = new JLabel("モンスター ");
+        monsterLabel.setForeground(Color.WHITE);
+        return monsterLabel;
+    }
+
+    @Override
+    public JLabel createMonsterLabelName() {
+        JLabel monsterLabelName = new JLabel();
+        monsterLabelName.setForeground(Color.WHITE);
+        return monsterLabelName;
+    }
+
+    @Override
+    public JLabel createMonsterLvLabel(String text) {
+        JLabel monsterLVLabel = new JLabel("LV");
+        monsterLVLabel.setForeground(Color.WHITE);
+        return monsterLVLabel;
+    }
+
+    @Override
+    public JLabel createMonsterLvLabelNumber() {
+        JLabel monsterLvLabelNumber = new JLabel();
+        monsterLvLabelNumber.setForeground(Color.WHITE);
+        return monsterLvLabelNumber;
+    }
+
+    @Override
+    public JLabel createPlayerLabel(String text) {
+        JLabel playerLabel = new JLabel("プレイヤー");
+        playerLabel.setForeground(Color.WHITE);
+        return playerLabel;
+    }
+
+    @Override
+    public JLabel createPlayerLabelName() {
+        JLabel playerLabelName = new JLabel();
+        playerLabelName.setForeground(Color.WHITE);
+        return playerLabelName;
     }
 }
