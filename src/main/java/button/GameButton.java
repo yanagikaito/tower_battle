@@ -1,13 +1,8 @@
-package factory;
+package button;
 
 import javax.swing.*;
-import java.awt.*;
 
-public abstract class GameElementFactory {
-
-    public abstract Font createFont();
-
-    public abstract Font createNormalFont();
+public abstract class GameButton {
 
     public abstract JButton createButton(String text);
 
@@ -18,6 +13,4 @@ public abstract class GameElementFactory {
     public abstract JButton createStatusButton(String text);
 
     public abstract JButton createDevilsTowerButton(String text);
-
-    public abstract JTextArea createTextArea(String text);
 }

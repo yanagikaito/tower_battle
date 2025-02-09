@@ -1,6 +1,8 @@
 package window;
 
+import button.GameButton;
 import factory.*;
+import font.GameFont;
 import frame.GameFrame;
 import handler.ChoiceHandler;
 import handler.TitleScreenHandler;
@@ -16,9 +18,10 @@ import static frame.FrameApp.*;
 public class GameWindow implements Window {
 
     private GameFrame gameFrame = FrameFactoryImpl.createFrame(baseDisplay());
-    private GameElementFactory factory = new ConcreteGameElementFactory();
+    private GameFont gameFont = new FontFactory();
     private GamePanel gamePanel = new PanelFactory();
     private GameLabel gameLabel = new LabelFactory();
+    private GameButton gameButton = new ButtonFactory();
 
     // ウィンドウ作成
     private JFrame window;
@@ -42,14 +45,14 @@ public class GameWindow implements Window {
     private JLabel weaponLabelName = gameLabel.createWeaponLabelTextName();
     private JLabel defLabel = gameLabel.createDEFLabel("");
     private JLabel defLabelName = gameLabel.createDEFLabelTextName();
-    private JButton startButton = factory.createButton("");
-    private JButton weaponShopButton = factory.createWeaponShopButton("");
-    private JButton armorShopButton = factory.createArmorShopButton("");
-    private JButton statusButton = factory.createStatusButton("");
-    private JButton devilsTowerButton = factory.createDevilsTowerButton("");
-    private JTextArea mainTextArea = factory.createTextArea("");
-    private Font titleFont = factory.createFont();
-    private Font normalFont = factory.createNormalFont();
+    private JButton startButton = gameButton.createButton("");
+    private JButton weaponShopButton = gameButton.createWeaponShopButton("");
+    private JButton armorShopButton = gameButton.createArmorShopButton("");
+    private JButton statusButton = gameButton.createStatusButton("");
+    private JButton devilsTowerButton = gameButton.createDevilsTowerButton("");
+    private JTextArea mainTextArea = gameFont.createTextArea("");
+    private Font titleFont = gameFont.createFont();
+    private Font normalFont = gameFont.createNormalFont();
     private ChoiceHandler csHandler = new ChoiceHandler(this);
     private TitleScreenHandler tsHandler = new TitleScreenHandler(this);
 
