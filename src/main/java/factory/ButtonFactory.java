@@ -1,19 +1,11 @@
 package factory;
 
+import button.GameButton;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ConcreteGameElementFactory extends GameElementFactory {
-
-    @Override
-    public Font createFont() {
-        return new Font("アリアル", Font.PLAIN, 65);
-    }
-
-    @Override
-    public Font createNormalFont() {
-        return new Font("アリアル", Font.PLAIN, 25);
-    }
+public class ButtonFactory extends GameButton {
 
     @Override
     public JButton createButton(String text) {
@@ -58,14 +50,5 @@ public class ConcreteGameElementFactory extends GameElementFactory {
         devilsTowerButton.setForeground(Color.WHITE);
         devilsTowerButton.setFocusPainted(false);
         return devilsTowerButton;
-    }
-
-    @Override
-    public JTextArea createTextArea(String text) {
-        JTextArea textArea = new JTextArea("町の施設");
-        textArea.setBackground(Color.BLACK);
-        textArea.setForeground(Color.WHITE);
-        textArea.setLineWrap(true);
-        return textArea;
     }
 }
