@@ -8,7 +8,7 @@ import java.awt.*;
 public class LabelFactory extends GameLabel {
 
     @Override
-    public JLabel createLabel(String text) {
+    public JLabel createLabelText(String text) {
         JLabel label = new JLabel("TOWER BATTLE");
         label.setForeground(Color.WHITE);
         return label;
@@ -29,17 +29,31 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createHPLabelText(String text) {
-        JLabel hpLabelText = new JLabel(" HP");
-        hpLabelText.setForeground(Color.WHITE);
-        return hpLabelText;
+    public JLabel createPlayerHPLabelText(String text) {
+        JLabel playerHPLabelText = new JLabel(" HP");
+        playerHPLabelText.setForeground(Color.WHITE);
+        return playerHPLabelText;
     }
 
     @Override
-    public JLabel createHPLabelNumber() {
-        JLabel hpLabelNumber = new JLabel();
-        hpLabelNumber.setForeground(Color.WHITE);
-        return hpLabelNumber;
+    public JLabel createPlayerHPLabelNumber() {
+        JLabel playerHPLabelNumber = new JLabel();
+        playerHPLabelNumber.setForeground(Color.WHITE);
+        return playerHPLabelNumber;
+    }
+
+    @Override
+    public JLabel createMonsterHPLabelText(String text) {
+        JLabel monsterHPLabelText = new JLabel(" HP");
+        monsterHPLabelText.setForeground(Color.WHITE);
+        return monsterHPLabelText;
+    }
+
+    @Override
+    public JLabel createMonsterHPLabelNumber() {
+        JLabel monsterHPLabelNumber = new JLabel();
+        monsterHPLabelNumber.setForeground(Color.WHITE);
+        return monsterHPLabelNumber;
     }
 
     @Override
@@ -71,7 +85,7 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createWeaponLabel(String text) {
+    public JLabel createWeaponLabelText(String text) {
         JLabel weaponLabel = new JLabel("武器");
         weaponLabel.setForeground(Color.WHITE);
         return weaponLabel;
@@ -99,7 +113,7 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createMonsterLabel(String text) {
+    public JLabel createMonsterLabelText(String text) {
         JLabel monsterLabel = new JLabel("モンスター ");
         monsterLabel.setForeground(Color.WHITE);
         return monsterLabel;
@@ -113,7 +127,7 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createMonsterLvLabel(String text) {
+    public JLabel createMonsterLvLabelText(String text) {
         JLabel monsterLVLabel = new JLabel("LV");
         monsterLVLabel.setForeground(Color.WHITE);
         return monsterLVLabel;
@@ -127,7 +141,7 @@ public class LabelFactory extends GameLabel {
     }
 
     @Override
-    public JLabel createPlayerLabel(String text) {
+    public JLabel createPlayerLabelText(String text) {
         JLabel playerLabel = new JLabel("プレイヤー");
         playerLabel.setForeground(Color.WHITE);
         return playerLabel;
