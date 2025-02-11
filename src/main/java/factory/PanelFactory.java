@@ -45,7 +45,24 @@ public class PanelFactory extends GamePanel {
     @Override
     public JPanel createDevilsTowerPanel() {
         JPanel devilsTowerPanel = new JPanel();
-        devilsTowerPanel.setBackground(Color.BLUE);
+        devilsTowerPanel.setBackground(Color.BLACK);
         return devilsTowerPanel;
+    }
+
+    @Override
+    public JPanel createBattlePanel() {
+        JPanel battlePanel = new JPanel();
+        battlePanel.setBounds(20, 50, 683, 455);
+        battlePanel.setLayout(new GridLayout(4,6));
+        battlePanel.setBackground(Color.YELLOW);
+        return battlePanel;
+    }
+
+    @Override
+    public JPanel createMonsterDisplayPanel() {
+        JPanel monsterDisplayPanel = new JPanel();
+        monsterDisplayPanel.setBounds(20, 100, 500, 50);
+        monsterDisplayPanel.setBackground(Color.BLUE);
+        return monsterDisplayPanel;
     }
 }

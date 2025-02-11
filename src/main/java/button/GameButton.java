@@ -13,4 +13,8 @@ public abstract class GameButton {
     public abstract JButton createStatusButton(String text);
 
     public abstract JButton createDevilsTowerButton(String text);
+
+    public abstract JButton createAttackButton(String text);
+
+    public abstract JButton createTownButton(String text);
 }
