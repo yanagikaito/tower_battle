@@ -11,6 +11,7 @@ import panel.GamePanel;
 import scroll.GameScroll;
 import status.MonsterStatus;
 import status.PlayerStatus;
+import status.Status;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +29,20 @@ public class GameWindow implements Window {
     private GameButton gameButton = new ButtonFactory();
     private GameScroll gameScroll = new BattleScreenFactory();
 
+    private Status playerStatus = new PlayerStatus("勇者",
+            "ロングソード",
+            "戦士の盾",
+            1,
+            10,
+            5,
+            3);
+
+    private Status monsterStatus = new MonsterStatus("スライム ",
+            1,
+            10,
+            5,
+            3);
+
     // ウィンドウ
     private JFrame window;
     private Container con;
@@ -37,6 +52,7 @@ public class GameWindow implements Window {
     // Position
     private String statusPosition = "ステータス";
     private String devilsPosition = "魔の塔";
+    private String attackPosition = "プレイヤーの攻撃";
 
     // JPanel
     private JPanel titleNamePanel = gamePanel.createPanel();
@@ -45,6 +61,8 @@ public class GameWindow implements Window {
     private JPanel choiceButtonPanel = gamePanel.createChoiceButtonPanel();
     private JPanel playerStatusPanel = gamePanel.createPlayerStatusPanel();
     private JPanel devilsTowerPanel = gamePanel.createDevilsTowerPanel();
+    private JPanel battlePanel = gamePanel.createBattlePanel();
+    private JPanel monsterDisplayPanel = gamePanel.createMonsterDisplayPanel();
 
     // JLabel
     private JLabel titleNameLabeltext = gameLabel.createLabelText("");
@@ -75,6 +93,8 @@ public class GameWindow implements Window {
     private JButton armorShopButton = gameButton.createArmorShopButton("");
     private JButton statusButton = gameButton.createStatusButton("");
     private JButton devilsTowerButton = gameButton.createDevilsTowerButton("");
+    private JButton attackButton = gameButton.createAttackButton("");
+    private JButton townButton = gameButton.createTownButton("");
 
     private JTextArea mainTextArea = gameFont.createTextArea("");
     private JScrollPane battleScreenScroll = gameScroll.createBattleScreenScroll();
@@ -228,37 +248,9 @@ public class GameWindow implements Window {
         mainTextPanel.setVisible(false);
         choiceButtonPanel.setVisible(false);
 
-        devilsTowerPanel.setLayout(new GridLayout(10, 1));
+        con.add(battlePanel);
 
-        // モンスターの情報を表示するラベルを追加
-        monsterLabeltext.setFont(normalFont);
-        devilsTowerPanel.add(monsterLabeltext);
-
-        monsterLabelName.setFont(normalFont);
-        devilsTowerPanel.add(monsterLabelName);
-
-        monsterLvLabeltext.setFont(normalFont);
-        devilsTowerPanel.add(monsterLvLabeltext);
-
-        monsterLvLabelNumber.setFont(normalFont);
-        devilsTowerPanel.add(monsterLvLabelNumber);
-
-        monsterHPLabeltext.setFont(normalFont);
-        devilsTowerPanel.add(monsterHPLabeltext);
-
-        monsterHPLabelNumber.setFont(normalFont);
-        devilsTowerPanel.add(monsterHPLabelNumber);
-
-        MonsterStatus.save(status -> {
-            monsterLabelName.setText(status.monsterName());
-            monsterHPLabelNumber.setText(" " + status.hp());
-            monsterLvLabelNumber.setText(" " + status.lv());
-        });
-
-        // プレイヤーの情報を表示するラベルを追加
-        playerLabeltext.setFont(normalFont);
-        devilsTowerPanel.add(playerLabeltext);
-
+        // devilsTowerPanelにプレイヤーのLVとHPのラベルを貼り付けている
         playerLabelName.setFont(normalFont);
         devilsTowerPanel.add(playerLabelName);
 
@@ -275,14 +267,65 @@ public class GameWindow implements Window {
         devilsTowerPanel.add(playerHPLabelNumber);
 
         PlayerStatus.save(status -> {
-            playerLabelName.setText(status.playerName());
+            playerLabelName.setText(status.name());
             playerHPLabelNumber.setText("" + status.hp());
             playerLvLabelNumber.setText("" + status.lv());
         });
 
+        // モンスターの情報を表示するラベルを追加
+        monsterLabelName.setFont(normalFont);
+        monsterDisplayPanel.add(monsterLabelName);
+
+        monsterHPLabeltext.setFont(normalFont);
+        monsterDisplayPanel.add(monsterHPLabeltext);
+
+        monsterHPLabelNumber.setFont(normalFont);
+        monsterDisplayPanel.add(monsterHPLabelNumber);
+
+        MonsterStatus.save(status -> {
+            monsterLabelName.setText(status.name() + "が現れた");
+            monsterHPLabelNumber.setText(" " + status.hp());
+        });
+
         // JScrollPaneにdevilsTowerPanelを設定
-        battleScreenScroll.setViewportView(devilsTowerPanel);
+        battleScreenScroll.setViewportView(battlePanel);
+        battlePanel.add(devilsTowerPanel);
+        battlePanel.add(monsterDisplayPanel);
+
+        attackButton.setFont(normalFont);
+        attackButton.addActionListener(csHandler);
+        attackButton.setActionCommand("c1");
+        battlePanel.add(attackButton);
+
+        townButton.setFont(normalFont);
+        townButton.addActionListener(csHandler);
+        townButton.setActionCommand("c2");
+        battlePanel.add(townButton);
+
+        devilsTowerPanel.setBounds(100, 30, 560, 50);
+        devilsTowerPanel.setLayout(new GridLayout(1, 4));
         con.add(battleScreenScroll);
+    }
+
+    public void playerAttack() {
+
+        monsterLabelName.setVisible(false);
+        monsterHPLabelNumber.setVisible(false);
+
+        attackPosition = "プレイヤーの攻撃";
+        int playerDamage = 0;
+        playerDamage = random.nextInt(playerStatus.atk()) + 1;
+        monsterHPLabeltext.setText(monsterStatus.name() + "攻撃し,"
+                + playerDamage + "ダメージを与えた。" + "残りHP" + monsterStatus.hp());
+        int monsterResult = monsterStatus.hp() - playerDamage;
+        if (monsterResult <= 0) {
+            monsterResult = 0;
+        }
+        monsterStatus = new MonsterStatus("スライム ",
+                1,
+                monsterResult,
+                5,
+                3);
     }
 
     public String getStatusPosition() {
@@ -291,5 +334,9 @@ public class GameWindow implements Window {
 
     public String getDevilsPosition() {
         return devilsPosition;
+    }
+
+    public String getAttackPosition() {
+        return attackPosition;
     }
 }

@@ -13,6 +13,10 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
         // 選択されたボタンのコマンドの文字列がこの変数に入る
         String yourChoice = e.getActionCommand();
 
+        // デバッグ用に現在のattackPositionを出力
+//        System.out.println("現在 Position: " + gameWindow.getAttackPosition());
+//        System.out.println("yourChoice: " + yourChoice);
+
         // プレイヤーの現在地
         switch (gameWindow.getStatusPosition()) {
             case "ステータス" -> {
@@ -25,6 +29,13 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
             case "魔の塔" -> {
                 switch (yourChoice) {
                     case "c4" -> gameWindow.devilsTowerScreen();
+                }
+            }
+        }
+        switch (gameWindow.getAttackPosition()) {
+            case "プレイヤーの攻撃" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.playerAttack();
                 }
             }
         }

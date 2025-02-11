@@ -2,7 +2,7 @@ package status;
 
 import java.util.function.Consumer;
 
-public record MonsterStatus(String monsterName,
+public record MonsterStatus(String name,
                             int lv,
                             int hp,
                             int atk,

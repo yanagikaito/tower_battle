@@ -51,4 +51,22 @@ public class ButtonFactory extends GameButton {
         devilsTowerButton.setFocusPainted(false);
         return devilsTowerButton;
     }
+
+    @Override
+    public JButton createAttackButton(String text) {
+        JButton attackButton = new JButton("攻撃");
+        attackButton.setBackground(Color.BLUE);
+        attackButton.setForeground(Color.WHITE);
+        attackButton.setFocusPainted(false);
+        return attackButton;
+    }
+
+    @Override
+    public JButton createTownButton(String text) {
+        JButton townButton = new JButton("町の施設");
+        townButton.setBackground(Color.BLACK);
+        townButton.setForeground(Color.WHITE);
+        townButton.setFocusPainted(false);
+        return townButton;
+    }
 }

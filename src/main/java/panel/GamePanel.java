@@ -15,4 +15,8 @@ public abstract class GamePanel {
     public abstract JPanel createPlayerStatusPanel();
 
     public abstract JPanel createDevilsTowerPanel();
+
+    public abstract JPanel createBattlePanel();
+
+    public abstract JPanel createMonsterDisplayPanel();
 }

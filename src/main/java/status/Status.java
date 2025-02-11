@@ -9,4 +9,6 @@ public interface Status {
     int atk();
 
     int def();
+
+    String name();
 }

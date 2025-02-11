@@ -2,7 +2,7 @@ package status;
 
 import java.util.function.Consumer;
 
-public record PlayerStatus(String playerName,
+public record PlayerStatus(String name,
                            String weaponName,
                            String armorName,
                            int lv,
