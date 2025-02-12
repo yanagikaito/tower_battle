@@ -53,6 +53,7 @@ public class GameWindow implements Window {
     private String statusPosition = "ステータス";
     private String devilsPosition = "魔の塔";
     private String attackPosition = "プレイヤーの攻撃";
+    private String townPosition = "町の施設";
 
     // JPanel
     private JPanel titleNamePanel = gamePanel.createPanel();
@@ -316,16 +317,28 @@ public class GameWindow implements Window {
         int playerDamage = 0;
         playerDamage = random.nextInt(playerStatus.atk()) + 1;
         monsterHPLabeltext.setText(monsterStatus.name() + "攻撃し,"
-                + playerDamage + "ダメージを与えた。" + "残りHP" + monsterStatus.hp());
+                + playerDamage + "ダメージを与えた。" + "HP" + monsterStatus.hp());
         int monsterResult = monsterStatus.hp() - playerDamage;
-        if (monsterResult <= 0) {
-            monsterResult = 0;
+        if (monsterResult <= 1) {
+            win();
         }
         monsterStatus = new MonsterStatus("スライム ",
                 1,
                 monsterResult,
                 5,
                 3);
+    }
+
+    public void win() {
+        monsterHPLabeltext.setText("モンスターを倒しました");
+    }
+
+    public void town() {
+
+        battlePanel.setVisible(false);
+        townPosition = "町の施設";
+
+
     }
 
     public String getStatusPosition() {
@@ -338,5 +351,9 @@ public class GameWindow implements Window {
 
     public String getAttackPosition() {
         return attackPosition;
+    }
+
+    public String getTownPosition() {
+        return townPosition;
     }
 }

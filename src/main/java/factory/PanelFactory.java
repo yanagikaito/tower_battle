@@ -53,8 +53,8 @@ public class PanelFactory extends GamePanel {
     public JPanel createBattlePanel() {
         JPanel battlePanel = new JPanel();
         battlePanel.setBounds(20, 50, 683, 455);
-        battlePanel.setLayout(new GridLayout(4,6));
-        battlePanel.setBackground(Color.YELLOW);
+        battlePanel.setLayout(new GridLayout(4, 6));
+        battlePanel.setBackground(Color.BLACK);
         return battlePanel;
     }
 
@@ -62,7 +62,7 @@ public class PanelFactory extends GamePanel {
     public JPanel createMonsterDisplayPanel() {
         JPanel monsterDisplayPanel = new JPanel();
         monsterDisplayPanel.setBounds(20, 100, 500, 50);
-        monsterDisplayPanel.setBackground(Color.BLUE);
+        monsterDisplayPanel.setBackground(Color.BLACK);
         return monsterDisplayPanel;
     }
 }

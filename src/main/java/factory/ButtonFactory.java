@@ -55,7 +55,7 @@ public class ButtonFactory extends GameButton {
     @Override
     public JButton createAttackButton(String text) {
         JButton attackButton = new JButton("攻撃");
-        attackButton.setBackground(Color.BLUE);
+        attackButton.setBackground(Color.BLACK);
         attackButton.setForeground(Color.WHITE);
         attackButton.setFocusPainted(false);
         return attackButton;
