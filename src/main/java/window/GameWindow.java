@@ -245,6 +245,8 @@ public class GameWindow implements Window {
     @Override
     public void devilsTowerScreen() {
 
+        showBattleScreenScroll();
+
         // 2つのパネルを無効にする。
         mainTextPanel.setVisible(false);
         choiceButtonPanel.setVisible(false);
@@ -335,18 +337,73 @@ public class GameWindow implements Window {
 
     public void town() {
 
-        battlePanel.setVisible(false);
+        hideTownComponents();
+        showBattleScreenScroll();
+
+        battleScreenScroll.setVisible(false);
         townPosition = "町の施設";
 
+        mainTextPanel = gamePanel.createMainTextPanel();
+        mainTextArea = gameFont.createTextArea("");
+        choiceButtonPanel = gamePanel.createChoiceButtonPanel();
+        weaponShopButton = gameButton.createWeaponShopButton("");
+        armorShopButton = gameButton.createArmorShopButton("");
+        statusButton = gameButton.createStatusButton("");
+        devilsTowerButton = gameButton.createDevilsTowerButton("");
+
+        // ゲームメインのパネル作成
+        mainTextPanel.setBounds(createSize() + 32, createSize() + 32,
+                (createSize() * 10) + 120, (createSize() * 5) + 10);
+        con.add(mainTextPanel);
+
+        mainTextArea.setBounds((createSize() * 2) + 4, (createSize() * 2) + 4,
+                (createSize() * 10) + 120, (createSize() * 5) + 10);
+        mainTextArea.setForeground(Color.WHITE);
+        mainTextArea.setFont(normalFont);
+        mainTextArea.setLineWrap(true);
+        mainTextPanel.add(mainTextArea);
+
+        // 選択ボタン作成
+        choiceButtonPanel.setBounds((createSize() * 5) - 10,
+                (createSize() * 5) + 110,
+                (createSize() * 5) + 60, (createSize() * 3) + 6);
+        choiceButtonPanel.setLayout(new FlowLayout());
+        con.add(choiceButtonPanel);
+
+        weaponShopButton.setFont(normalFont);
+        weaponShopButton.addActionListener(csHandler);
+        weaponShopButton.setActionCommand("c1");
+        choiceButtonPanel.add(weaponShopButton);
+
+        armorShopButton.setFont(normalFont);
+        armorShopButton.addActionListener(csHandler);
+        armorShopButton.setActionCommand("c2");
+        choiceButtonPanel.add(armorShopButton);
+
+        statusButton.setFont(normalFont);
+        statusButton.addActionListener(csHandler);
+        statusButton.setActionCommand("c3");
+        choiceButtonPanel.add(statusButton);
+
+        devilsTowerButton.setFont(normalFont);
+        devilsTowerButton.addActionListener(csHandler);
+        devilsTowerButton.setActionCommand("c4");
+        choiceButtonPanel.add(devilsTowerButton);
 
     }
 
-    public String getStatusPosition() {
-        return statusPosition;
+    // 町のコンポーネントを隠すメソッドを追加
+    public void hideTownComponents() {
+        if (mainTextPanel != null) {
+            mainTextPanel.setVisible(false);
+        }
+        if (choiceButtonPanel != null) {
+            choiceButtonPanel.setVisible(false);
+        }
     }
 
-    public String getDevilsPosition() {
-        return devilsPosition;
+    public void showBattleScreenScroll() {
+        battleScreenScroll.setVisible(true);
     }
 
     public String getAttackPosition() {

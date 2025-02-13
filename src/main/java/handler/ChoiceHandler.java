@@ -19,23 +19,9 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
 
         // プレイヤーの現在地
         switch (gameWindow.getTownPosition()) {
-            case "町の施設" -> {
+            case "町の施設", "魔の塔", "ステータス" -> {
                 switch (yourChoice) {
                     case "c3" -> gameWindow.statusScreen();
-                    case "c4" -> gameWindow.devilsTowerScreen();
-                }
-            }
-        }
-        switch (gameWindow.getStatusPosition()) {
-            case "ステータス" -> {
-                switch (yourChoice) {
-                    case "c3" -> gameWindow.statusScreen();
-                }
-            }
-        }
-        switch (gameWindow.getDevilsPosition()) {
-            case "魔の塔" -> {
-                switch (yourChoice) {
                     case "c4" -> gameWindow.devilsTowerScreen();
                 }
             }
