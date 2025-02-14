@@ -12,7 +12,7 @@ public record PlayerStatus(String name,
 
     public static void save(Consumer<PlayerStatus> con) {
         con.accept(new PlayerStatus("勇者",
-                "ロングソード",
+                "ナイフ",
                 "戦士の盾",
                 1,
                 10,

@@ -30,7 +30,7 @@ public class GameWindow implements Window {
     private GameScroll gameScroll = new BattleScreenFactory();
 
     private Status playerStatus = new PlayerStatus("勇者",
-            "ロングソード",
+            "ナイフ",
             "戦士の盾",
             1,
             10,
@@ -50,10 +50,7 @@ public class GameWindow implements Window {
     private Random random = new Random();
 
     // Position
-    private String statusPosition = "ステータス";
-    private String devilsPosition = "魔の塔";
-    private String attackPosition = "プレイヤーの攻撃";
-    private String townPosition = "町の施設";
+    private String position;
 
     // JPanel
     private JPanel titleNamePanel = gamePanel.createPanel();
@@ -90,10 +87,10 @@ public class GameWindow implements Window {
 
     // JButton
     private JButton startButton = gameButton.createButton("");
-    private JButton weaponShopButton = gameButton.createWeaponShopButton("");
-    private JButton armorShopButton = gameButton.createArmorShopButton("");
-    private JButton statusButton = gameButton.createStatusButton("");
-    private JButton devilsTowerButton = gameButton.createDevilsTowerButton("");
+    private JButton choiceButton1 = gameButton.createWeaponShopButton("");
+    private JButton choiceButton2 = gameButton.createArmorShopButton("");
+    private JButton choiceButton3 = gameButton.createStatusButton("");
+    private JButton choiceButton4 = gameButton.createDevilsTowerButton("");
     private JButton attackButton = gameButton.createAttackButton("");
     private JButton townButton = gameButton.createTownButton("");
 
@@ -160,52 +157,44 @@ public class GameWindow implements Window {
         choiceButtonPanel.setBounds((createSize() * 5) - 10,
                 (createSize() * 5) + 110,
                 (createSize() * 5) + 60, (createSize() * 3) + 6);
-        choiceButtonPanel.setLayout(new FlowLayout());
+        choiceButtonPanel.setLayout(new GridLayout(4, 1));
         con.add(choiceButtonPanel);
 
-        weaponShopButton.setFont(normalFont);
-        weaponShopButton.addActionListener(csHandler);
-        weaponShopButton.setActionCommand("c1");
-        choiceButtonPanel.add(weaponShopButton);
+        choiceButton1.setFont(normalFont);
+        choiceButton1.addActionListener(csHandler);
+        choiceButton1.setActionCommand("c1");
+        choiceButtonPanel.add(choiceButton1);
 
-        armorShopButton.setFont(normalFont);
-        armorShopButton.addActionListener(csHandler);
-        armorShopButton.setActionCommand("c2");
-        choiceButtonPanel.add(armorShopButton);
+        choiceButton2.setFont(normalFont);
+        choiceButton2.addActionListener(csHandler);
+        choiceButton2.setActionCommand("c2");
+        choiceButtonPanel.add(choiceButton2);
 
-        statusButton.setFont(normalFont);
-        statusButton.addActionListener(csHandler);
-        statusButton.setActionCommand("c3");
-        choiceButtonPanel.add(statusButton);
+        choiceButton3.setFont(normalFont);
+        choiceButton3.addActionListener(csHandler);
+        choiceButton3.setActionCommand("c3");
+        choiceButtonPanel.add(choiceButton3);
 
-        devilsTowerButton.setFont(normalFont);
-        devilsTowerButton.addActionListener(csHandler);
-        devilsTowerButton.setActionCommand("c4");
-        choiceButtonPanel.add(devilsTowerButton);
+        choiceButton4.setFont(normalFont);
+        choiceButton4.addActionListener(csHandler);
+        choiceButton4.setActionCommand("c4");
+        choiceButtonPanel.add(choiceButton4);
+
+        statusScreen();
     }
 
     @Override
     public void statusScreen() {
 
-        // 2つのパネルを無効にする。
-        mainTextPanel.setVisible(false);
-        choiceButtonPanel.setVisible(false);
-
         con.add(playerStatusPanel);
-        playerStatusPanel.setBounds(80, 20, 600, 200);
-        playerStatusPanel.setLayout(new GridLayout(6, 1));
+        playerStatusPanel.setBounds(80, 20, 600, 50);
+        playerStatusPanel.setLayout(new GridLayout(1, 4));
 
         weaponLabeltext.setFont(normalFont);
         playerStatusPanel.add(weaponLabeltext);
 
         weaponLabelName.setFont(normalFont);
         playerStatusPanel.add(weaponLabelName);
-
-        defLabel.setFont(normalFont);
-        playerStatusPanel.add(defLabel);
-
-        defLabelName.setFont(normalFont);
-        playerStatusPanel.add(defLabelName);
 
         playerLvLabeltext.setFont(normalFont);
         playerStatusPanel.add(playerLvLabeltext);
@@ -219,95 +208,76 @@ public class GameWindow implements Window {
         playerHPLabelNumber.setFont(normalFont);
         playerStatusPanel.add(playerHPLabelNumber);
 
-        atkLabeltext.setFont(normalFont);
-        playerStatusPanel.add(atkLabeltext);
-
-        atkLabelNumber.setFont(normalFont);
-        playerStatusPanel.add(atkLabelNumber);
-
-        defLabelText.setFont(normalFont);
-        playerStatusPanel.add(defLabelText);
-
-        defLabelNumber.setFont(normalFont);
-        playerStatusPanel.add(defLabelNumber);
-
         PlayerStatus.save(status -> {
 
             weaponLabelName.setText(status.weaponName());
-            defLabelName.setText(status.armorName());
             playerHPLabelNumber.setText("" + status.hp());
             playerLvLabelNumber.setText("" + status.lv());
-            atkLabelNumber.setText("" + status.atk());
-            defLabelNumber.setText("" + status.def());
         });
+
+        town();
+    }
+
+    public void doorGuard() {
+
+        position = "門番";
+        mainTextArea.setText("門番 : ここを通すわけには,いかない");
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
+    public void attackGuard() {
+
+        position = "門番に攻撃";
+        mainTextArea.setText("門番 :　おい,バカなマネはよせ。\n門番は反撃し,プレイヤーを攻撃した。\n(あなたは3ダメージを受けた。)");
+
+        int valueHP = playerStatus.hp() - 3;
+        if (valueHP < 0) {
+            valueHP = 1;
+        }
+        playerStatus = new PlayerStatus("勇者",
+                "ナイフ",
+                "戦士の盾",
+                1,
+                valueHP,
+                5,
+                3);
+        playerHPLabelNumber.setText("" + playerStatus.hp());
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
+    public void town() {
+
+        position = "町の施設";
+        mainTextArea.setText("町の施設");
+
+        choiceButton1.setText("門番");
+        choiceButton2.setText("門番に攻撃");
+        choiceButton3.setText("立ち去る");
+        choiceButton4.setText("魔の塔");
     }
 
     @Override
     public void devilsTowerScreen() {
 
-        showBattleScreenScroll();
+        position = "魔の塔";
+        monsterStatus.hp();
+        mainTextArea.setText(monsterStatus.name() + "に遭遇した");
 
-        // 2つのパネルを無効にする。
-        mainTextPanel.setVisible(false);
-        choiceButtonPanel.setVisible(false);
+        choiceButton1.setText("たたかう");
+        choiceButton2.setText("逃げる");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
 
-        con.add(battlePanel);
+    public void fight() {
 
-        // devilsTowerPanelにプレイヤーのLVとHPのラベルを貼り付けている
-        playerLabelName.setFont(normalFont);
-        devilsTowerPanel.add(playerLabelName);
-
-        playerLvLabeltext.setFont(normalFont);
-        devilsTowerPanel.add(playerLvLabeltext);
-
-        playerLvLabelNumber.setFont(normalFont);
-        devilsTowerPanel.add(playerLvLabelNumber);
-
-        playerHPLabeltext.setFont(normalFont);
-        devilsTowerPanel.add(playerHPLabeltext);
-
-        playerHPLabelNumber.setFont(normalFont);
-        devilsTowerPanel.add(playerHPLabelNumber);
-
-        PlayerStatus.save(status -> {
-            playerLabelName.setText(status.name());
-            playerHPLabelNumber.setText("" + status.hp());
-            playerLvLabelNumber.setText("" + status.lv());
-        });
-
-        // モンスターの情報を表示するラベルを追加
-        monsterLabelName.setFont(normalFont);
-        monsterDisplayPanel.add(monsterLabelName);
-
-        monsterHPLabeltext.setFont(normalFont);
-        monsterDisplayPanel.add(monsterHPLabeltext);
-
-        monsterHPLabelNumber.setFont(normalFont);
-        monsterDisplayPanel.add(monsterHPLabelNumber);
-
-        MonsterStatus.save(status -> {
-            monsterLabelName.setText(status.name() + "が現れた");
-            monsterHPLabelNumber.setText(" " + status.hp());
-        });
-
-        // JScrollPaneにdevilsTowerPanelを設定
-        battleScreenScroll.setViewportView(battlePanel);
-        battlePanel.add(devilsTowerPanel);
-        battlePanel.add(monsterDisplayPanel);
-
-        attackButton.setFont(normalFont);
-        attackButton.addActionListener(csHandler);
-        attackButton.setActionCommand("c1");
-        battlePanel.add(attackButton);
-
-        townButton.setFont(normalFont);
-        townButton.addActionListener(csHandler);
-        townButton.setActionCommand("c2");
-        battlePanel.add(townButton);
-
-        devilsTowerPanel.setBounds(100, 30, 560, 50);
-        devilsTowerPanel.setLayout(new GridLayout(1, 4));
-        con.add(battleScreenScroll);
     }
 
     public void playerAttack() {
@@ -315,7 +285,7 @@ public class GameWindow implements Window {
         monsterLabelName.setVisible(false);
         monsterHPLabelNumber.setVisible(false);
 
-        attackPosition = "プレイヤーの攻撃";
+        position = "プレイヤーの攻撃";
         int playerDamage = 0;
         playerDamage = random.nextInt(playerStatus.atk()) + 1;
         monsterHPLabeltext.setText(monsterStatus.name() + "攻撃し,"
@@ -323,6 +293,8 @@ public class GameWindow implements Window {
         int monsterResult = monsterStatus.hp() - playerDamage;
         if (monsterResult <= 1) {
             win();
+        } else {
+            monsterHPLabeltext.setVisible(true);
         }
         monsterStatus = new MonsterStatus("スライム ",
                 1,
@@ -331,86 +303,59 @@ public class GameWindow implements Window {
                 3);
     }
 
+    public void crossRoad() {
+
+        position = "分かれ道";
+        mainTextArea.setText("ここからは分かれ道になっている。\n 南にいけば,町に戻れる。");
+
+        choiceButton1.setText("北へ進む");
+        choiceButton2.setText("東へ進む");
+        choiceButton3.setText("南へ進む");
+        choiceButton4.setText("西へ進む");
+    }
+
+    public void north() {
+
+        int recovery = random.nextInt(5) + 1;
+        position = "北";
+        mainTextArea.setText("川がある。\n水を飲み,川辺で休んだ。\n\nプレイヤーのHPが" + recovery + "回復した。");
+        int valueHP = playerStatus.hp() + recovery;
+        if (valueHP >= 10) {
+            valueHP = 10;
+        }
+        playerStatus = new PlayerStatus("勇者",
+                "ナイフ",
+                "戦士の盾",
+                1,
+                valueHP,
+                5,
+                3);
+
+        playerHPLabelNumber.setText("" + playerStatus.hp());
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
+    public void east() {
+
+    }
+
+    public void west() {
+
+    }
+
     public void win() {
         monsterHPLabeltext.setText("モンスターを倒しました");
     }
 
-    public void town() {
-
-        hideTownComponents();
-        showBattleScreenScroll();
-
-        battleScreenScroll.setVisible(false);
-        townPosition = "町の施設";
-
-        mainTextPanel = gamePanel.createMainTextPanel();
-        mainTextArea = gameFont.createTextArea("");
-        choiceButtonPanel = gamePanel.createChoiceButtonPanel();
-        weaponShopButton = gameButton.createWeaponShopButton("");
-        armorShopButton = gameButton.createArmorShopButton("");
-        statusButton = gameButton.createStatusButton("");
-        devilsTowerButton = gameButton.createDevilsTowerButton("");
-
-        // ゲームメインのパネル作成
-        mainTextPanel.setBounds(createSize() + 32, createSize() + 32,
-                (createSize() * 10) + 120, (createSize() * 5) + 10);
-        con.add(mainTextPanel);
-
-        mainTextArea.setBounds((createSize() * 2) + 4, (createSize() * 2) + 4,
-                (createSize() * 10) + 120, (createSize() * 5) + 10);
-        mainTextArea.setForeground(Color.WHITE);
-        mainTextArea.setFont(normalFont);
-        mainTextArea.setLineWrap(true);
-        mainTextPanel.add(mainTextArea);
-
-        // 選択ボタン作成
-        choiceButtonPanel.setBounds((createSize() * 5) - 10,
-                (createSize() * 5) + 110,
-                (createSize() * 5) + 60, (createSize() * 3) + 6);
-        choiceButtonPanel.setLayout(new FlowLayout());
-        con.add(choiceButtonPanel);
-
-        weaponShopButton.setFont(normalFont);
-        weaponShopButton.addActionListener(csHandler);
-        weaponShopButton.setActionCommand("c1");
-        choiceButtonPanel.add(weaponShopButton);
-
-        armorShopButton.setFont(normalFont);
-        armorShopButton.addActionListener(csHandler);
-        armorShopButton.setActionCommand("c2");
-        choiceButtonPanel.add(armorShopButton);
-
-        statusButton.setFont(normalFont);
-        statusButton.addActionListener(csHandler);
-        statusButton.setActionCommand("c3");
-        choiceButtonPanel.add(statusButton);
-
-        devilsTowerButton.setFont(normalFont);
-        devilsTowerButton.addActionListener(csHandler);
-        devilsTowerButton.setActionCommand("c4");
-        choiceButtonPanel.add(devilsTowerButton);
-
+    public void lose() {
+        mainTextArea.setText("ゲームオーバー");
     }
 
-    // 町のコンポーネントを隠すメソッドを追加
-    public void hideTownComponents() {
-        if (mainTextPanel != null) {
-            mainTextPanel.setVisible(false);
-        }
-        if (choiceButtonPanel != null) {
-            choiceButtonPanel.setVisible(false);
-        }
-    }
 
-    public void showBattleScreenScroll() {
-        battleScreenScroll.setVisible(true);
-    }
-
-    public String getAttackPosition() {
-        return attackPosition;
-    }
-
-    public String getTownPosition() {
-        return townPosition;
+    public String getPosition() {
+        return position;
     }
 }
