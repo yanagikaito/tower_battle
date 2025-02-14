@@ -18,15 +18,33 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
 //        System.out.println("yourChoice: " + yourChoice);
 
         // プレイヤーの現在地
-        switch (gameWindow.getTownPosition()) {
-            case "町の施設", "魔の塔", "ステータス" -> {
+        switch (gameWindow.getPosition()) {
+            case "町の施設" -> {
                 switch (yourChoice) {
-                    case "c3" -> gameWindow.statusScreen();
+                    case "c1" -> gameWindow.doorGuard();
+                    case "c2" -> gameWindow.attackGuard();
+                    case "c3" -> gameWindow.crossRoad();
                     case "c4" -> gameWindow.devilsTowerScreen();
                 }
             }
-        }
-        switch (gameWindow.getAttackPosition()) {
+            case "門番", "門番に攻撃" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.town();
+                }
+            }
+            case "分かれ道" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.north();
+                    case "c2" -> gameWindow.east();
+                    case "c3" -> gameWindow.town();
+                    case "c4" -> gameWindow.west();
+                }
+            }
+            case "北", "東", "勝ち", "負け" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.crossRoad();
+                }
+            }
             case "プレイヤーの攻撃" -> {
                 switch (yourChoice) {
                     case "c1" -> gameWindow.playerAttack();
