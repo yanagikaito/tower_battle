@@ -17,56 +17,38 @@ public class ButtonFactory extends GameButton {
     }
 
     @Override
-    public JButton createWeaponShopButton(String text) {
-        JButton weaponShopButton = new JButton("武器屋");
-        weaponShopButton.setBackground(Color.BLACK);
-        weaponShopButton.setForeground(Color.WHITE);
-        weaponShopButton.setFocusPainted(false);
-        return weaponShopButton;
+    public JButton createChoiceButton1(String text) {
+        JButton choiceButton1 = new JButton("選択 1");
+        choiceButton1.setBackground(Color.BLACK);
+        choiceButton1.setForeground(Color.WHITE);
+        choiceButton1.setFocusPainted(false);
+        return choiceButton1;
     }
 
     @Override
-    public JButton createArmorShopButton(String text) {
-        JButton armorShopButton = new JButton("防具屋");
-        armorShopButton.setBackground(Color.BLACK);
-        armorShopButton.setForeground(Color.WHITE);
-        armorShopButton.setFocusPainted(false);
-        return armorShopButton;
+    public JButton createChoiceButton2(String text) {
+        JButton choiceButton2 = new JButton("選択 2");
+        choiceButton2.setBackground(Color.BLACK);
+        choiceButton2.setForeground(Color.WHITE);
+        choiceButton2.setFocusPainted(false);
+        return choiceButton2;
     }
 
     @Override
-    public JButton createStatusButton(String text) {
-        JButton statusButton = new JButton("ステータス");
-        statusButton.setBackground(Color.BLACK);
-        statusButton.setForeground(Color.WHITE);
-        statusButton.setFocusPainted(false);
-        return statusButton;
+    public JButton createChoiceButton3(String text) {
+        JButton choiceButton3 = new JButton("選択 3");
+        choiceButton3.setBackground(Color.BLACK);
+        choiceButton3.setForeground(Color.WHITE);
+        choiceButton3.setFocusPainted(false);
+        return choiceButton3;
     }
 
     @Override
-    public JButton createDevilsTowerButton(String text) {
-        JButton devilsTowerButton = new JButton("魔の塔");
-        devilsTowerButton.setBackground(Color.BLACK);
-        devilsTowerButton.setForeground(Color.WHITE);
-        devilsTowerButton.setFocusPainted(false);
-        return devilsTowerButton;
-    }
-
-    @Override
-    public JButton createAttackButton(String text) {
-        JButton attackButton = new JButton("攻撃");
-        attackButton.setBackground(Color.BLACK);
-        attackButton.setForeground(Color.WHITE);
-        attackButton.setFocusPainted(false);
-        return attackButton;
-    }
-
-    @Override
-    public JButton createTownButton(String text) {
-        JButton townButton = new JButton("町の施設");
-        townButton.setBackground(Color.BLACK);
-        townButton.setForeground(Color.WHITE);
-        townButton.setFocusPainted(false);
-        return townButton;
+    public JButton createChoiceButton4(String text) {
+        JButton choiceButton4 = new JButton("選択 4");
+        choiceButton4.setBackground(Color.BLACK);
+        choiceButton4.setForeground(Color.WHITE);
+        choiceButton4.setFocusPainted(false);
+        return choiceButton4;
     }
 }
