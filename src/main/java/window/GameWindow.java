@@ -8,10 +8,6 @@ import handler.ChoiceHandler;
 import handler.TitleScreenHandler;
 import label.GameLabel;
 import panel.GamePanel;
-import scroll.GameScroll;
-import status.MonsterStatus;
-import status.PlayerStatus;
-import status.Status;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,25 +23,20 @@ public class GameWindow implements Window {
     private GamePanel gamePanel = new PanelFactory();
     private GameLabel gameLabel = new LabelFactory();
     private GameButton gameButton = new ButtonFactory();
-    private GameScroll gameScroll = new BattleScreenFactory();
-
-    private Status playerStatus = new PlayerStatus("勇者",
-            "ナイフ",
-            "戦士の盾",
-            1,
-            10,
-            5,
-            3);
-
-    private Status monsterStatus = new MonsterStatus("スライム ",
-            1,
-            10,
-            5,
-            3);
 
     // ウィンドウ
     private JFrame window;
     private Container con;
+
+    // ステータス
+    private int playerHp;
+    private int playerLv;
+    private String weaponName;
+    private int weaponKnife;
+    private int monsterHp;
+    private int monsterAttack;
+    private String monsterName;
+    private int weaponLongSword;
 
     private Random random = new Random();
 
@@ -58,44 +49,24 @@ public class GameWindow implements Window {
     private JPanel mainTextPanel = gamePanel.createMainTextPanel();
     private JPanel choiceButtonPanel = gamePanel.createChoiceButtonPanel();
     private JPanel playerStatusPanel = gamePanel.createPlayerStatusPanel();
-    private JPanel devilsTowerPanel = gamePanel.createDevilsTowerPanel();
-    private JPanel battlePanel = gamePanel.createBattlePanel();
-    private JPanel monsterDisplayPanel = gamePanel.createMonsterDisplayPanel();
 
     // JLabel
     private JLabel titleNameLabeltext = gameLabel.createLabelText("");
     private JLabel playerLvLabeltext = gameLabel.createPlayerLvLabelText("");
     private JLabel playerLvLabelNumber = gameLabel.createPlayerLvLabelNumber();
-    private JLabel playerLabeltext = gameLabel.createPlayerLabelText("");
-    private JLabel playerLabelName = gameLabel.createPlayerLabelName();
     private JLabel playerHPLabeltext = gameLabel.createPlayerHPLabelText("");
     private JLabel playerHPLabelNumber = gameLabel.createPlayerHPLabelNumber();
-    private JLabel defLabelName = gameLabel.createDEFLabelTextName();
-    private JLabel atkLabeltext = gameLabel.createATKLabelText("");
-    private JLabel atkLabelNumber = gameLabel.createATKLabelNumber();
-    private JLabel defLabelText = gameLabel.createDEFLabelText("");
-    private JLabel defLabelNumber = gameLabel.createDEFLabelNumber();
     private JLabel weaponLabeltext = gameLabel.createWeaponLabelText("");
     private JLabel weaponLabelName = gameLabel.createWeaponLabelTextName();
-    private JLabel defLabel = gameLabel.createDEFLabel("");
-    private JLabel monsterLabeltext = gameLabel.createMonsterLabelText("");
-    private JLabel monsterLabelName = gameLabel.createMonsterLabelName();
-    private JLabel monsterLvLabeltext = gameLabel.createMonsterLvLabelText("");
-    private JLabel monsterLvLabelNumber = gameLabel.createMonsterLvLabelNumber();
-    private JLabel monsterHPLabeltext = gameLabel.createMonsterHPLabelText("");
-    private JLabel monsterHPLabelNumber = gameLabel.createMonsterHPLabelNumber();
 
     // JButton
     private JButton startButton = gameButton.createButton("");
-    private JButton choiceButton1 = gameButton.createWeaponShopButton("");
-    private JButton choiceButton2 = gameButton.createArmorShopButton("");
-    private JButton choiceButton3 = gameButton.createStatusButton("");
-    private JButton choiceButton4 = gameButton.createDevilsTowerButton("");
-    private JButton attackButton = gameButton.createAttackButton("");
-    private JButton townButton = gameButton.createTownButton("");
+    private JButton choiceButton1 = gameButton.createChoiceButton1("");
+    private JButton choiceButton2 = gameButton.createChoiceButton2("");
+    private JButton choiceButton3 = gameButton.createChoiceButton3("");
+    private JButton choiceButton4 = gameButton.createChoiceButton4("");
 
     private JTextArea mainTextArea = gameFont.createTextArea("");
-    private JScrollPane battleScreenScroll = gameScroll.createBattleScreenScroll();
 
     // Font
     private Font titleFont = gameFont.createFont();
@@ -208,50 +179,24 @@ public class GameWindow implements Window {
         playerHPLabelNumber.setFont(normalFont);
         playerStatusPanel.add(playerHPLabelNumber);
 
-        PlayerStatus.save(status -> {
+        playerSetUp();
+    }
 
-            weaponLabelName.setText(status.weaponName());
-            playerHPLabelNumber.setText("" + status.hp());
-            playerLvLabelNumber.setText("" + status.lv());
-        });
+    public void playerSetUp() {
+
+        playerHp = 15;
+        playerLv = 1;
+        weaponName = "ナイフ";
+        weaponKnife = 3;
+
+        playerHPLabelNumber.setText("" + playerHp);
+        playerLvLabelNumber.setText("" + playerLv);
+        weaponLabelName.setText(weaponName);
 
         town();
     }
 
-    public void doorGuard() {
-
-        position = "門番";
-        mainTextArea.setText("門番 : ここを通すわけには,いかない");
-
-        choiceButton1.setText(">");
-        choiceButton2.setText("");
-        choiceButton3.setText("");
-        choiceButton4.setText("");
-    }
-
-    public void attackGuard() {
-
-        position = "門番に攻撃";
-        mainTextArea.setText("門番 :　おい,バカなマネはよせ。\n門番は反撃し,プレイヤーを攻撃した。\n(あなたは3ダメージを受けた。)");
-
-        int valueHP = playerStatus.hp() - 3;
-        if (valueHP < 0) {
-            valueHP = 1;
-        }
-        playerStatus = new PlayerStatus("勇者",
-                "ナイフ",
-                "戦士の盾",
-                1,
-                valueHP,
-                5,
-                3);
-        playerHPLabelNumber.setText("" + playerStatus.hp());
-        choiceButton1.setText(">");
-        choiceButton2.setText("");
-        choiceButton3.setText("");
-        choiceButton4.setText("");
-    }
-
+    @Override
     public void town() {
 
         position = "町の施設";
@@ -264,11 +209,43 @@ public class GameWindow implements Window {
     }
 
     @Override
+    public void doorGuard() {
+
+        position = "門番";
+        mainTextArea.setText("門番 : ここを通すわけには,いかない");
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
+    @Override
+    public void attackGuard() {
+
+        position = "門番に攻撃";
+        mainTextArea.setText("門番 :　おい,バカなマネはよせ。\n門番は反撃し,プレイヤーを攻撃した。\n(あなたは3ダメージを受けた。)");
+
+        playerHp = playerHp - 3;
+        if (playerHp < 0) {
+            playerHp = 0;
+        }
+
+        playerHPLabelNumber.setText("" + playerHp);
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
+    @Override
     public void devilsTowerScreen() {
 
         position = "魔の塔";
-        monsterStatus.hp();
-        mainTextArea.setText(monsterStatus.name() + "に遭遇した");
+        monsterHp = 20;
+        monsterName = "スライム";
+
+        mainTextArea.setText("1階 :" + monsterName + "に遭遇した");
 
         choiceButton1.setText("たたかう");
         choiceButton2.setText("逃げる");
@@ -276,33 +253,64 @@ public class GameWindow implements Window {
         choiceButton4.setText("");
     }
 
+    @Override
     public void fight() {
 
+        position = "たたかう";
+        monsterName = "スライム";
+        mainTextArea.setText(monsterName + "HP :" + monsterHp + "\n\n 何をする?");
+
+        choiceButton1.setText("攻撃");
+        choiceButton2.setText("逃げる");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
     }
 
+    @Override
     public void playerAttack() {
-
-        monsterLabelName.setVisible(false);
-        monsterHPLabelNumber.setVisible(false);
 
         position = "プレイヤーの攻撃";
         int playerDamage = 0;
-        playerDamage = random.nextInt(playerStatus.atk()) + 1;
-        monsterHPLabeltext.setText(monsterStatus.name() + "攻撃し,"
-                + playerDamage + "ダメージを与えた。" + "HP" + monsterStatus.hp());
-        int monsterResult = monsterStatus.hp() - playerDamage;
-        if (monsterResult <= 1) {
-            win();
-        } else {
-            monsterHPLabeltext.setVisible(true);
+        if (weaponName.equals("ナイフ")) {
+            playerDamage = random.nextInt(weaponKnife) + 1;
+        } else if (weaponName.equals("ロングソード")) {
+            playerDamage = random.nextInt(weaponLongSword + 10) + 1;
         }
-        monsterStatus = new MonsterStatus("スライム ",
-                1,
-                monsterResult,
-                5,
-                3);
+        mainTextArea.setText(monsterName + "を攻撃し,"
+                + playerDamage + "ダメージを与えた。" + "HP" + monsterHp);
+        monsterHp = monsterHp - playerDamage;
+        if (monsterHp <= 0) {
+            monsterHp = 0;
+        }
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
     }
 
+    @Override
+    public void monsterAttack() {
+
+        position = "スライムの攻撃";
+        int monsterDamage = 0;
+        monsterAttack = 3;
+        monsterDamage = random.nextInt(monsterAttack) + 1;
+        mainTextArea.setText("スライム" + "はプレイヤーに" + monsterDamage + "ダメージ与えた。");
+        playerHp = playerHp - monsterDamage;
+        if (playerHp <= 0) {
+            playerHp = 0;
+        }
+
+        playerHPLabelNumber.setText("" + playerHp);
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
+    @Override
     public void crossRoad() {
 
         position = "分かれ道";
@@ -314,48 +322,92 @@ public class GameWindow implements Window {
         choiceButton4.setText("西へ進む");
     }
 
+    @Override
     public void north() {
 
         int recovery = random.nextInt(5) + 1;
         position = "北";
         mainTextArea.setText("川がある。\n水を飲み,川辺で休んだ。\n\nプレイヤーのHPが" + recovery + "回復した。");
-        int valueHP = playerStatus.hp() + recovery;
-        if (valueHP >= 10) {
-            valueHP = 10;
+        playerHp = playerHp + recovery;
+        if (playerHp >= 15) {
+            playerHp = 15;
         }
-        playerStatus = new PlayerStatus("勇者",
-                "ナイフ",
-                "戦士の盾",
-                1,
-                valueHP,
-                5,
-                3);
 
-        playerHPLabelNumber.setText("" + playerStatus.hp());
+        playerHPLabelNumber.setText("" + playerHp);
         choiceButton1.setText(">");
         choiceButton2.setText("");
         choiceButton3.setText("");
         choiceButton4.setText("");
     }
 
+    @Override
     public void east() {
 
+        position = "東";
+        int weaponDrop = random.nextInt(3) + 1;
+        if (weaponDrop == 3) {
+            mainTextArea.setText("森に入り,ロングソードを見つける。 \n\nロングソードを手に入れた。");
+            weaponName = "ロングソード";
+            weaponLabelName.setText(weaponName);
+        } else {
+            mainTextArea.setText("森に入り,何も見つからなかった。");
+        }
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
     }
 
+    @Override
     public void west() {
 
+        position = "西";
+        mainTextArea.setText("砂漠に入り,何も見つからなかった。");
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
     }
 
+    @Override
     public void win() {
-        monsterHPLabeltext.setText("モンスターを倒しました");
+
+        position = "勝ち";
+        playerLvLabelNumber.setText("" + playerLv);
+        playerHPLabelNumber.setText("" + playerHp);
+        mainTextArea.setText("モンスターを倒しました");
+
+        choiceButton1.setText("分かれ道");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
     }
 
+    @Override
     public void lose() {
+
+        playerHPLabelNumber.setText("" + playerHp);
+        position = "負け";
         mainTextArea.setText("ゲームオーバー");
+
+        choiceButton1.setText(">");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
     }
 
 
     public String getPosition() {
         return position;
+    }
+
+    public int getPlayerHp() {
+        return playerHp;
+    }
+
+    public int getMonsterHp() {
+        return monsterHp;
     }
 }

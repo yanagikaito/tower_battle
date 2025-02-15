@@ -40,15 +40,53 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
                     case "c4" -> gameWindow.west();
                 }
             }
-            case "北", "東", "勝ち", "負け" -> {
+            case "北", "東", "西" -> {
                 switch (yourChoice) {
                     case "c1" -> gameWindow.crossRoad();
                 }
             }
-            case "プレイヤーの攻撃" -> {
+            case "負け" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.crossRoad();
+                }
+            }
+            case "魔の塔" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.fight();
+                    case "c2" -> gameWindow.crossRoad();
+                }
+            }
+            case "勝ち" -> {
+                switch (yourChoice) {
+                    case "c1" -> gameWindow.crossRoad();
+                }
+            }
+            case "たたかう" -> {
                 switch (yourChoice) {
                     case "c1" -> gameWindow.playerAttack();
-                    case "c2" -> gameWindow.town();
+                    case "c2" -> gameWindow.crossRoad();
+                }
+            }
+            case "プレイヤーの攻撃" -> {
+                switch (yourChoice) {
+                    case "c1" -> {
+                        if (gameWindow.getMonsterHp() < 1) {
+                            gameWindow.win();
+                        } else {
+                            gameWindow.monsterAttack();
+                        }
+                    }
+                }
+            }
+            case "スライムの攻撃" -> {
+                switch (yourChoice) {
+                    case "c1" -> {
+                        if (gameWindow.getPlayerHp() < 1) {
+                            gameWindow.lose();
+                        } else {
+                            gameWindow.fight();
+                        }
+                    }
                 }
             }
         }
