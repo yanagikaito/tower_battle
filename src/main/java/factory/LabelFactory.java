@@ -30,7 +30,7 @@ public class LabelFactory extends GameLabel {
 
     @Override
     public JLabel createPlayerHPLabelText(String text) {
-        JLabel playerHPLabelText = new JLabel(" HP");
+        JLabel playerHPLabelText = new JLabel("HP");
         playerHPLabelText.setForeground(Color.WHITE);
         return playerHPLabelText;
     }

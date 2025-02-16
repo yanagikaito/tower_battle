@@ -15,7 +15,7 @@ import java.util.Random;
 
 import static frame.FrameApp.*;
 
-public class GameWindow implements Window {
+public class GameWindow extends JPanel implements Window {
 
     // Factory
     private GameFrame gameFrame = FrameFactoryImpl.createFrame(baseDisplay());
@@ -113,21 +113,22 @@ public class GameWindow implements Window {
         startButtonPanel.setVisible(false);
 
         // ゲームメインのパネル作成
-        mainTextPanel.setBounds(createSize() + 32, createSize() + 32,
-                (createSize() * 10) + 120, (createSize() * 5) + 10);
+        mainTextPanel.setBounds(createSize() + 2, (createSize() * 7) - 14,
+                (createSize() * 10) - 30, (createSize() * 5) + 10);
         con.add(mainTextPanel);
 
-        mainTextArea.setBounds((createSize() * 2) + 4, (createSize() * 2) + 4,
-                (createSize() * 10) + 120, (createSize() * 5) + 10);
+        mainTextArea.setText("町の施設");
+        mainTextArea.setBounds(createSize() + 2, (createSize() * 7) - 14,
+                (createSize() * 10) - 30, (createSize() * 5) + 10);
         mainTextArea.setForeground(Color.WHITE);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
 
         // 選択ボタン作成
-        choiceButtonPanel.setBounds((createSize() * 5) - 10,
-                (createSize() * 5) + 110,
-                (createSize() * 5) + 60, (createSize() * 3) + 6);
+        choiceButtonPanel.setBounds((createSize() * 10) + 20,
+                (createSize() * 7) + 14,
+                (createSize() * 5), (createSize() * 3));
         choiceButtonPanel.setLayout(new GridLayout(4, 1));
         con.add(choiceButtonPanel);
 
@@ -158,8 +159,8 @@ public class GameWindow implements Window {
     public void statusScreen() {
 
         con.add(playerStatusPanel);
-        playerStatusPanel.setBounds(80, 20, 600, 50);
-        playerStatusPanel.setLayout(new GridLayout(1, 4));
+        playerStatusPanel.setBounds(500, 100, 270, 80);
+        playerStatusPanel.setLayout(new GridLayout(3, 3));
 
         weaponLabeltext.setFont(normalFont);
         playerStatusPanel.add(weaponLabeltext);
