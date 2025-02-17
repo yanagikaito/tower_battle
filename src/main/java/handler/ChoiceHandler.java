@@ -21,7 +21,13 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
         switch (gameWindow.getPosition()) {
             case "町の施設" -> {
                 switch (yourChoice) {
-                    case "c1" -> gameWindow.doorGuard();
+                    case "c1" -> {
+                        if (gameWindow.getTownTicket() == 1) {
+                            gameWindow.ending();
+                        } else {
+                            gameWindow.doorGuard();
+                        }
+                    }
                     case "c2" -> gameWindow.attackGuard();
                     case "c3" -> gameWindow.crossRoad();
                     case "c4" -> gameWindow.devilsTowerScreen();
@@ -40,12 +46,7 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
                     case "c4" -> gameWindow.west();
                 }
             }
-            case "北", "東", "西" -> {
-                switch (yourChoice) {
-                    case "c1" -> gameWindow.crossRoad();
-                }
-            }
-            case "負け" -> {
+            case "北", "東", "西", "負け", "勝ち" -> {
                 switch (yourChoice) {
                     case "c1" -> gameWindow.crossRoad();
                 }
@@ -54,11 +55,6 @@ public record ChoiceHandler(GameWindow gameWindow) implements ActionListener {
                 switch (yourChoice) {
                     case "c1" -> gameWindow.fight();
                     case "c2" -> gameWindow.crossRoad();
-                }
-            }
-            case "勝ち" -> {
-                switch (yourChoice) {
-                    case "c1" -> gameWindow.crossRoad();
                 }
             }
             case "たたかう" -> {
