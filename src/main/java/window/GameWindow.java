@@ -37,6 +37,7 @@ public class GameWindow extends JPanel implements Window {
     private int monsterAttack;
     private String monsterName;
     private int weaponLongSword;
+    private int townTicket;
 
     private Random random = new Random();
 
@@ -189,6 +190,7 @@ public class GameWindow extends JPanel implements Window {
         playerLv = 1;
         weaponName = "ナイフ";
         weaponKnife = 3;
+        weaponLongSword = 10;
 
         playerHPLabelNumber.setText("" + playerHp);
         playerLvLabelNumber.setText("" + playerLv);
@@ -246,7 +248,7 @@ public class GameWindow extends JPanel implements Window {
         monsterHp = 20;
         monsterName = "スライム";
 
-        mainTextArea.setText("1階 :" + monsterName + "に遭遇した");
+        mainTextArea.setText(monsterName + "に遭遇した");
 
         choiceButton1.setText("たたかう");
         choiceButton2.setText("逃げる");
@@ -275,7 +277,7 @@ public class GameWindow extends JPanel implements Window {
         if (weaponName.equals("ナイフ")) {
             playerDamage = random.nextInt(weaponKnife) + 1;
         } else if (weaponName.equals("ロングソード")) {
-            playerDamage = random.nextInt(weaponLongSword + 10) + 1;
+            playerDamage = random.nextInt(weaponLongSword) + 1;
         }
         mainTextArea.setText(monsterName + "を攻撃し,"
                 + playerDamage + "ダメージを与えた。" + "HP" + monsterHp);
@@ -374,11 +376,16 @@ public class GameWindow extends JPanel implements Window {
 
     @Override
     public void win() {
-
+        int randomDrop = random.nextInt(2) + 1;
         position = "勝ち";
+        townTicket = 1;
+        if (randomDrop == 2) {
+            mainTextArea.setText("プレイヤーはスライムを倒しました。\n スライムは町のチケットを落とした。町のチケットを手に入れた");
+        } else {
+            mainTextArea.setText("スライムを倒しました");
+        }
         playerLvLabelNumber.setText("" + playerLv);
         playerHPLabelNumber.setText("" + playerHp);
-        mainTextArea.setText("モンスターを倒しました");
 
         choiceButton1.setText("分かれ道");
         choiceButton2.setText("");
@@ -399,6 +406,16 @@ public class GameWindow extends JPanel implements Window {
         choiceButton4.setText("");
     }
 
+    @Override
+    public void ending() {
+        position = "終了";
+        mainTextArea.setText("門番 モンスターを倒してくれたのか、ありがとう。 \n私たちの町へようこそ \n\nゲームクリア!");
+        choiceButton1.setText("");
+        choiceButton2.setText("");
+        choiceButton3.setText("");
+        choiceButton4.setText("");
+    }
+
 
     public String getPosition() {
         return position;
@@ -410,5 +427,9 @@ public class GameWindow extends JPanel implements Window {
 
     public int getMonsterHp() {
         return monsterHp;
+    }
+
+    public int getTownTicket() {
+        return townTicket;
     }
 }
